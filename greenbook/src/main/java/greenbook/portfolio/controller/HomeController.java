@@ -37,7 +37,6 @@ public class HomeController {
 
     @GetMapping("/best")
     public List<BookDto> bestSeller() {
-        System.out.println("bookService.getBestSeller() = " + bookService.getBestSeller());
         return bookService.getBestSeller();
     }
 

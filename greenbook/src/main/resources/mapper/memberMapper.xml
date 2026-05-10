@@ -15,5 +15,11 @@
             me_session_limit = #{me_session_limit}
         where me_id = #{me_id}
     </update>
-    
+
+    <select id="getEmail" parameterType="String" resultType="MemberDto">
+        select *
+        from member
+        where me_email = #{email}
+    </select>
+
 </mapper>

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class MemberService {
@@ -35,6 +36,10 @@ public class MemberService {
 
     public void updateLogin(MemberDto updateUser) {
         memberDao.updateLogin(updateUser);
+    }
+
+    public List<MemberDto> getEmail(String email) {
+        return memberDao.getEmail(email);
     }
 
 }

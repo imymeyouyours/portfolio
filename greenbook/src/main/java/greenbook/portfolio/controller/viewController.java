@@ -16,6 +16,11 @@ public class viewController {
         return "/member/login";
     }
 
+    @GetMapping("/find/id")
+    public String findId() {
+        return "/member/findid";
+    }
+
     @GetMapping("/signup")
     public String signup() {
         return "/member/signup";
