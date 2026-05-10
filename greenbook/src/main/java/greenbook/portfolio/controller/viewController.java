@@ -16,4 +16,9 @@ public class viewController {
         return "/member/login";
     }
 
+    @GetMapping("/signup")
+    public String signup() {
+        return "/member/signup";
+    }
+
 }

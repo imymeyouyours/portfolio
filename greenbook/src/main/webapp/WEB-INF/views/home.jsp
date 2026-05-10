@@ -346,7 +346,6 @@
             opacity: 80%;
             top: 0px;
             right: 0;
-            display: flex;
             display: none;
         }
 
@@ -430,7 +429,7 @@
     <ul>
         <c:if test="${user == null}">
             <li><a href="${pageContext.request.contextPath}/login">LOGIN</a></li>
-            <li><a href="${pageContext.request.contextPath}/member/signup">SIGNUP</a></li>
+            <li><a href="${pageContext.request.contextPath}/signup">SIGNUP</a></li>
         </c:if>
 
         <c:if test="${user != null}">
@@ -594,7 +593,7 @@
 
                     html +=
                         `<div class="bsBook">
-                            <a href="${pageContext.request.contextPath}/book/details?re_bk_isbn=` + book.bk_isbn + `>
+                            <a href="${pageContext.request.contextPath}/book/details?re_bk_isbn=` + book.bk_isbn + `">
                                 <span class="bsNum">` + (index + 1) + `</span>
                                 <img src="${pageContext.request.contextPath}/img` + book.bk_mainImg + `" alt="bestImg"
                                      class="bestImg"/>
