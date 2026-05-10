@@ -5,12 +5,10 @@ import greenbook.portfolio.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -67,6 +65,49 @@ public class MemberController {
             e.printStackTrace();
             return new ResponseEntity<>("LOGIN_ERR", HttpStatus.BAD_REQUEST);
 
+        }
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(
+            HttpSession session,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+
+        try {
+
+            MemberDto user = (MemberDto) session.getAttribute("user");
+
+            Cookie[] cookies = request.getCookies();
+
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+
+                    if ("loginCookie".equals(cookie.getName())) {
+
+                        cookie.setPath("/");
+                        cookie.setMaxAge(0);
+                        response.addCookie(cookie);
+
+                        if (user != null) {
+                            MemberDto updateUser = new MemberDto();
+                            updateUser.setMe_id(user.getMe_id());
+                            updateUser.setMe_session_id(null);
+                            updateUser.setMe_session_limit(null);
+
+                            memberService.updateLogin(updateUser);
+                        }
+                    }
+                }
+            }
+
+            session.invalidate();
+
+            return new ResponseEntity<>("LOGOUT_OK", HttpStatus.OK);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("LOGOUT_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
