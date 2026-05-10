@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="greenbook.portfolio.dao.MemberMapper">
+    <select id="getMember" parameterType="String" resultType="MemberDto">
+        select *
+        from member
+        where me_id = #{id}
+    </select>
+
+    <update id="updateLogin" parameterType="MemberDto">
+        update member
+        set me_session_id    = #{me_session_id},
+            me_session_limit = #{me_session_limit}
+        where me_id = #{me_id}
+    </update>
+    
+</mapper>

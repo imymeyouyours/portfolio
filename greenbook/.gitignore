@@ -1,0 +1,23 @@
+# compiled files
+*.class
+
+# build folders
+target/
+build/
+out/
+
+# IDE
+.idea/
+*.iml
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# Eclipse / STS
+.settings/
+
+#root-context.xml
+src/main/webapp/WEB-INF/spring/root-context.xml

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="greenbook.portfolio.dao.BookMapper">
+
+    <select id="selectChoice" resultType="BookDto">
+        select book.*
+        from registration
+                 join book on re_bk_isbn = bk_isbn and re_choice = 'Y'
+    </select>
+
+    <select id="selectToday" resultType="BookDto">
+        select *, re_contents as bk_contents
+        from book
+                 join registration on bk_isbn = re_bk_isbn
+        where re_choice = 'N'
+        order by rand() limit 1
+    </select>
+
+    <select id="selectBestSeller" resultType="BookDto">
+        select *
+        from registration
+                 join book on re_bk_isbn = bk_isbn
+        order by re_sales desc limit 0,10
+    </select>
+
+</mapper>
