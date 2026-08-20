@@ -2,6 +2,7 @@ package greenbook.portfolio.service;
 
 import greenbook.portfolio.dao.BookDao;
 import greenbook.portfolio.domain.BookDto;
+import greenbook.portfolio.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,22 @@ public class BookService {
 
     public List<BookDto> getBestSeller() {
         return bookDao.getBestSeller();
+    }
+
+    public List<BookDto> getRegistration(
+            String reCatagory,
+            Criteria cri) {
+
+        return bookDao.getRegistration(reCatagory, cri);
+    }
+
+    public int getTotalCountCatagory(
+            String reCatagory,
+            Criteria cri) {
+
+        return bookDao.getTotalCountCatagory(
+                reCatagory,
+                cri
+        );
     }
 }

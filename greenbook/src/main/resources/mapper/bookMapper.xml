@@ -7,13 +7,13 @@
     <select id="selectChoice" resultType="BookDto">
         select book.*
         from registration
-                 join book on re_bk_isbn = bk_isbn and re_choice = 'Y'
+        join book on re_bk_isbn = bk_isbn and re_choice = 'Y'
     </select>
 
     <select id="selectToday" resultType="BookDto">
         select *, re_contents as bk_contents
         from book
-                 join registration on bk_isbn = re_bk_isbn
+        join registration on bk_isbn = re_bk_isbn
         where re_choice = 'N'
         order by rand() limit 1
     </select>
@@ -21,8 +21,34 @@
     <select id="selectBestSeller" resultType="BookDto">
         select *
         from registration
-                 join book on re_bk_isbn = bk_isbn
+        join book on re_bk_isbn = bk_isbn
         order by re_sales desc limit 0,10
     </select>
 
+    <select id="selectRegistration" resultType="BookDto">
+        select * from registration join book on re_bk_isbn = bk_isbn where re_catagory = #{re_catagory}
+        <if test="cri.country == '국내/해외'">
+            and (bk_country = "국내" or bk_country = "해외")
+        </if>
+        <if test="cri.country == '외국'">
+            and bk_country = "외국"
+        </if>
+        <if test="cri.sort == 'basic'">
+            order by re_title asc
+        </if>
+        <if test="cri.sort == 'popular'">
+            order by re_sales desc
+        </if>
+        <if test="cri.sort == 'highPrice'">
+            order by re_price desc
+        </if>
+        <if test="cri.sort == 'lowPrice'">
+            order by re_price asc
+        </if>
+        limit #{cri.pageStart}, #{cri.perPageNum}
+    </select>
+    <select id="selectTotalCatagory" resultType="int">
+        select count(*) from registration join book on re_bk_isbn = bk_isbn
+        join books on bs_bk_isbn = bk_isbn where re_catagory = #{re_catagory}
+    </select>
 </mapper>
