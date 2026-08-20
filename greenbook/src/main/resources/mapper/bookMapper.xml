@@ -26,7 +26,7 @@
     </select>
 
     <select id="selectRegistration" resultType="BookDto">
-        select * from registration join book on re_bk_isbn = bk_isbn where re_catagory = #{re_catagory}
+        select book.*, registration.re_price as bk_price from registration join book on re_bk_isbn = bk_isbn where re_catagory = #{re_catagory}
         <if test="cri.country == '국내/해외'">
             and (bk_country = "국내" or bk_country = "해외")
         </if>
