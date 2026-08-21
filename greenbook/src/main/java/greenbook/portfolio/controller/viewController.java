@@ -31,4 +31,9 @@ public class viewController {
     @GetMapping("/catagory")
     public String catagory() { return "/book/catagory";}
 
+    @GetMapping("/details")
+    public String details() {
+        return "/book/details";
+    }
+
 }

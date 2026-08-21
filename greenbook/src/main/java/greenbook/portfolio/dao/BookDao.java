@@ -1,11 +1,13 @@
 package greenbook.portfolio.dao;
 
 import greenbook.portfolio.domain.BookDto;
+import greenbook.portfolio.domain.RegistrationDto;
 import greenbook.portfolio.pagination.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +59,14 @@ public class BookDao {
                 namespace + "selectTotalCatagory",
                 params
         );
+    }
+
+    public BookDto getBookDetails(BigInteger re_bk_isbn) {
+        return session.selectOne(namespace+"getBook", re_bk_isbn);
+    }
+
+    public RegistrationDto getRegi(BigInteger re_bk_isbn) {
+        return session.selectOne(namespace+"selectRegi", re_bk_isbn);
     }
 
 }

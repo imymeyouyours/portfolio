@@ -776,7 +776,7 @@
 
                         '<a href="' +
                             contextPath +
-                            '/book/details?re_bk_isbn=' +
+                            '/details?re_bk_isbn=' +
                             book.bk_isbn +
                         '">' +
 
@@ -797,7 +797,7 @@
 
                         '<a href="' +
                             contextPath +
-                            '/book/details?re_bk_isbn=' +
+                            '/details?re_bk_isbn=' +
                             book.bk_isbn +
                         '">' +
 

@@ -1,10 +1,12 @@
 package greenbook.portfolio.dao;
 
+import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.MemberDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Repository
@@ -25,5 +27,9 @@ public class MemberDao {
 
     public List<MemberDto> getEmail(String email) {
         return session.selectList(namespace + "getEmail", email);
+    }
+
+    public AuthorDto getAuthor(BigInteger re_bk_isbn) {
+        return session.selectOne(namespace + "getAuthor", re_bk_isbn);
     }
 }

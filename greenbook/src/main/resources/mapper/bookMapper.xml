@@ -51,4 +51,12 @@
         select count(*) from registration join book on re_bk_isbn = bk_isbn
         join books on bs_bk_isbn = bk_isbn where re_catagory = #{re_catagory}
     </select>
+
+    <select id="getBook" resultType="BookDto">
+        select * from book where bk_isbn = #{re_bk_isbn}
+    </select>
+
+    <select id="selectRegi" resultType="RegistrationDto">
+        select * from registration where re_bk_isbn = #{re_bk_isbn}
+    </select>
 </mapper>

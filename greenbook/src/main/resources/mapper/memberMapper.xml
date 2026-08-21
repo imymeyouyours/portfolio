@@ -22,4 +22,8 @@
         where me_email = #{email}
     </select>
 
+    <select id="getAuthor" resultType="AuthorDto">
+        select * from author where au_num = #{re_bk_isbn}
+    </select>
+
 </mapper>

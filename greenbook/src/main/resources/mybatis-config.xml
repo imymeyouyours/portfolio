@@ -6,5 +6,7 @@
     <typeAliases>
         <typeAlias alias="BookDto" type="greenbook.portfolio.domain.BookDto"/>
         <typeAlias alias="MemberDto" type="greenbook.portfolio.domain.MemberDto"/>
+        <typeAlias alias="AuthorDto" type="greenbook.portfolio.domain.AuthorDto"/>
+        <typeAlias alias="RegistrationDto" type="greenbook.portfolio.domain.RegistrationDto"/>
     </typeAliases>
 </configuration>

@@ -1,11 +1,13 @@
 package greenbook.portfolio.service;
 
 import greenbook.portfolio.dao.MemberDao;
+import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +42,10 @@ public class MemberService {
 
     public List<MemberDto> getEmail(String email) {
         return memberDao.getEmail(email);
+    }
+
+    public AuthorDto getAuthor(BigInteger re_bk_isbn) {
+        return memberDao.getAuthor(re_bk_isbn);
     }
 
 }
