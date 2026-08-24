@@ -29,7 +29,7 @@ public class MemberDao {
         return session.selectList(namespace + "getEmail", email);
     }
 
-    public AuthorDto getAuthor(BigInteger re_bk_isbn) {
-        return session.selectOne(namespace + "getAuthor", re_bk_isbn);
+    public List<AuthorDto> getAuthorList(BigInteger re_bk_isbn) {
+        return session.selectList(namespace + "getAuthorList", re_bk_isbn);
     }
 }

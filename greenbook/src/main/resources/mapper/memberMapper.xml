@@ -22,8 +22,9 @@
         where me_email = #{email}
     </select>
 
-    <select id="getAuthor" resultType="AuthorDto">
-        select * from author where au_num = #{re_bk_isbn}
+    <select id="getAuthorList" resultType="AuthorDto">
+        select * from author join books on au_num = bs_au_num
+        where bs_bk_isbn = #{re_bk_isbn} and bs_part = '저자'
     </select>
 
 </mapper>

@@ -307,6 +307,10 @@
             display: block;
         }
 
+        .authorContents {
+            white-space: pre-line;
+        }
+
     </style>
 
 </head>
@@ -959,14 +963,14 @@ $(function() {
             $('.bookCatagory').text(
                 (book.bk_country || '') +
                 ' > ' +
-                (book.re_catagory || '')
+                (regi.re_catagory || '')
             );
 
 
             /* 책 소개 */
 
             $('.bookContents').text(
-                book.re_contents || ''
+                regi.re_contents || ''
             );
 
 
@@ -986,18 +990,45 @@ $(function() {
 
             /* 저자 */
 
-            if (author) {
+            if (author && author.length > 0) {
+
+                console.log(author);
+
+                let authorNames = '';
+                let authorContents = '';
+
+                author.forEach(function(a, index) {
+
+                    // 상단 저자 이름
+                    authorNames += a.au_writer || '';
+
+                    if (index < author.length - 1) {
+                        authorNames += ', ';
+                    }
+
+                    // 작가가 2명 이상일 경우
+                    if (author.length >= 2) {
+                        authorContents += (a.au_writer || '') + '\n';
+                        authorContents += (a.au_contents || '');
+
+                        if (index < author.length - 1) {
+                            authorContents += '\n\n';
+                        }
+                    }
+
+                    // 작가가 1명일 경우
+                    else {
+                        authorContents = a.au_contents || '';
+                    }
+                });
 
                 $('.authorName').text(
-                    '저자 | ' +
-                    (author.au_writer || '')
+                    '저자 | ' + authorNames
                 );
-
 
                 $('.authorContents').text(
-                    author.au_contents || ''
+                    authorContents
                 );
-
             }
 
         },

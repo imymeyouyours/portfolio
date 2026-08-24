@@ -44,8 +44,8 @@ public class MemberService {
         return memberDao.getEmail(email);
     }
 
-    public AuthorDto getAuthor(BigInteger re_bk_isbn) {
-        return memberDao.getAuthor(re_bk_isbn);
+    public List<AuthorDto> getAuthorList(BigInteger re_bk_isbn) {
+        return memberDao.getAuthorList(re_bk_isbn);
     }
 
 }

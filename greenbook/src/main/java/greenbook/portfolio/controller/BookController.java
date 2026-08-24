@@ -59,8 +59,8 @@ public class BookController {
         BookDto book =
                 bookService.getBookDetails(re_bk_isbn);
 
-        AuthorDto author =
-                memberService.getAuthor(re_bk_isbn);
+        List<AuthorDto> author =
+                memberService.getAuthorList(re_bk_isbn);
 
         RegistrationDto regi = bookService.getRegi(re_bk_isbn);
 
