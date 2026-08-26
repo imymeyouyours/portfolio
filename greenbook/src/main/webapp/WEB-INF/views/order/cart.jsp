@@ -513,7 +513,7 @@
 <div class="container">
 
     <form id="orderForm"
-          action="<%=request.getContextPath()%>/order/payment">
+          action="<%=request.getContextPath()%>/payment">
 
         <table class="table cart-table">
 
@@ -1562,7 +1562,7 @@ $(function() {
 
                 contextPath +
 
-                '/order/payment?ca_num=' +
+                '/payment?ca_num=' +
 
                 encodeURIComponent(
                     cartNum
@@ -1634,7 +1634,7 @@ $(function() {
 
                 contextPath +
 
-                '/order/payment?ca_num=' +
+                '/payment?ca_num=' +
 
                 encodeURIComponent(
 

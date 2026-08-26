@@ -30,4 +30,33 @@
         select #{amount}, re_code, #{id} from registration where re_bk_isbn = #{bkIsbn}
     </insert>
 
+    <select id="getPaymentList" resultType="CartDto">
+        select
+        cart.*,
+        bk_mainImg as ca_mainImg,
+        re_title as ca_title,
+        bk_subtitle as ca_subTitle,
+        re_price as ca_price,
+        bk_isbn as ca_isbn
+        from cart
+        join registration
+        on ca_re_code = re_code
+        join book
+        on bk_isbn = re_bk_isbn
+        where ca_me_id = #{id}
+        and ca_valid = 'I'
+        and ca_num in
+        <foreach collection="caNum"
+                 item="num"
+                 open="("
+                 separator=","
+                 close=")">
+            #{num}
+        </foreach>
+    </select>
+
+    <select id="getPaymentListDirect" resultType="CartDto">
+        select re_title as ca_title, #{amount} as ca_amount, bk_mainImg as ca_mainImg, re_price as ca_price , bk_subtitle as ca_subTitle, bk_isbn as ca_isbn
+        from registration join book on bk_isbn = re_bk_isbn where re_bk_isbn=#{isbn}
+    </select>
 </mapper>

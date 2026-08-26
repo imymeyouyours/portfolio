@@ -56,4 +56,30 @@ public class CartDao {
 
         return session.insert(namespace+"getCartRegister",map);
     }
+
+    public List<CartDto> getPaymentList(Integer[] ca_num, String id) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("caNum", ca_num);
+        map.put("id", id);
+
+        return session.selectList(
+                namespace + "getPaymentList",
+                map
+        );
+    }
+
+    public List<CartDto> getPaymentList(BigInteger isbn, Integer amount) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("isbn", isbn);
+        map.put("amount", amount);
+
+        return session.selectList(
+                namespace + "getPaymentListDirect",
+                map
+        );
+    }
 }

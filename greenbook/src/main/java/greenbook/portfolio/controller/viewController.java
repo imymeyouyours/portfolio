@@ -41,4 +41,9 @@ public class viewController {
         return "/order/cart";
     }
 
+    @GetMapping("/payment")
+    public String payment() {
+        return "/order/payment";
+    }
+
 }

@@ -41,6 +41,24 @@ public class CartService {
                 cartDao.getCartRegister(checkList[i],cartAmount[i],id);
             }
         }
+    }
 
+    public List<CartDto> getPaymentList(Integer[] ca_num, MemberDto member) {
+
+        if (ca_num == null || member == null) {
+            return null;
+        }
+
+        return cartDao.getPaymentList(ca_num, member.getMe_id());
+    }
+
+
+    public List<CartDto> getPaymentList(BigInteger isbn, Integer amount) {
+
+        if (isbn == null || amount == null) {
+            return null;
+        }
+
+        return cartDao.getPaymentList(isbn, amount);
     }
 }

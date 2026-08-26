@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +97,46 @@ public class CartController {
                     "CART_ERR",
                     HttpStatus.BAD_REQUEST
             );
+        }
+    }
+
+    @GetMapping("/payment")
+    public ResponseEntity<Map<String, Object>> getPayment(
+            HttpSession session,
+            Integer[] ca_num,
+            BigInteger isbn,
+            Integer amount) {
+
+        try {
+            MemberDto member = (MemberDto) session.getAttribute("user");
+
+
+            System.out.println("member = " + member);
+            System.out.println("ca_num = " + Arrays.toString(ca_num));
+            System.out.println("isbn = " + isbn);
+            System.out.println("amount = " + amount);
+
+            if (member == null) {
+                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            }
+
+            List<CartDto> paymentList;
+
+            if (ca_num != null && ca_num.length != 0) {
+                paymentList = cartService.getPaymentList(ca_num, member);
+            } else {
+                paymentList = cartService.getPaymentList(isbn, amount);
+            }
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("paymentList", paymentList);
+            result.put("member", member);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
