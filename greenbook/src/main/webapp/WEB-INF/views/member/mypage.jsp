@@ -129,28 +129,28 @@
         </div>
         <div class="subCatagory-list">
 	         <ul class="dome-list">
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=소설/시&country=국내/해외">소설/시</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=에세이&country=국내/해외">에세이</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=인문&country=국내/해외">인문</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=역사&country=국내/해외">역사</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=예술&country=국내/해외">예술</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=종교&country=국내/해외">종교</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=사회&country=국내/해외">사회</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=과학&country=국내/해외">과학</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=자기계발&country=국내/해외">자기계발</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=국어와외국어&country=국내/해외">국어와외국어</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=IT/모바일&country=국내/해외">IT/모바일</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=소설/시&country=국내/해외">소설/시</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=에세이&country=국내/해외">에세이</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=인문&country=국내/해외">인문</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=역사&country=국내/해외">역사</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=예술&country=국내/해외">예술</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=종교&country=국내/해외">종교</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=사회&country=국내/해외">사회</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=과학&country=국내/해외">과학</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=자기계발&country=국내/해외">자기계발</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=국어와외국어&country=국내/해외">국어와외국어</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=IT/모바일&country=국내/해외">IT/모바일</a></li>
 	         </ul>
 	     </div>
 	     <div class="subCatagory-list">
 	         <ul class="foreign-list">
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=문학&country=외국">문학</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=소설&country=외국">소설</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=경제/경영&country=외국">경제/경영</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=인문/사회&country=외국">인문/사회</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=예술&country=외국">예술</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=컴퓨터&country=외국">컴퓨터</a></li>
-	             <li><a href="<%=request.getContextPath()%>/book/catagory?re_catagory=자연과학&country=외국">자연과학</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=문학&country=외국">문학</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=소설&country=외국">소설</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=경제/경영&country=외국">경제/경영</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=인문/사회&country=외국">인문/사회</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=예술&country=외국">예술</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=컴퓨터&country=외국">컴퓨터</a></li>
+	             <li><a href="<%=request.getContextPath()%>/catagory?re_catagory=자연과학&country=외국">자연과학</a></li>
 	         </ul>
         </div>
     </div>

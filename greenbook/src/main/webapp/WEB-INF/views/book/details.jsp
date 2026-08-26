@@ -509,7 +509,7 @@
             </li>
 
             <li>
-                <a href="<%=request.getContextPath()%>/order/cart">
+                <a href="<%=request.getContextPath()%>/cart">
                     CART
                 </a>
             </li>
@@ -977,7 +977,7 @@ $(function() {
             /* 장바구니에 필요한 코드 */
 
             $('.code').val(
-                book.re_code || ''
+                regi.re_code || ''
             );
 
 
@@ -1091,7 +1091,7 @@ $(function() {
 
             url:
                 contextPath +
-                '/order/cart',
+                '/api/cart',
 
             type:
                 'post',
@@ -1106,10 +1106,8 @@ $(function() {
             success: function(result) {
 
                 if (
-                    result == '1' ||
                     result == 'CART_OK'
                 ) {
-
                     alert(
                         '카트 담기 성공'
                     );
@@ -1126,7 +1124,7 @@ $(function() {
 
                     location.href =
                         contextPath +
-                        '/order/cart';
+                        '/cart';
 
                 }
 

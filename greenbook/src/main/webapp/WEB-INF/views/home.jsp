@@ -437,7 +437,7 @@
         </c:if>
         <c:if test="${user != null && user.me_grade != 'ADMIN'}">
             <li><a href="${pageContext.request.contextPath}/mypage">MYPAGE</a></li>
-            <li><a href="${pageContext.request.contextPath}/order/cart">CART</a></li>
+            <li><a href="${pageContext.request.contextPath}/cart">CART</a></li>
         </c:if>
 
         <c:if test="${user != null && user.me_grade == 'ADMIN'}">

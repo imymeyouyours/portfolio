@@ -1,0 +1,46 @@
+package greenbook.portfolio.service;
+
+import greenbook.portfolio.dao.CartDao;
+import greenbook.portfolio.domain.CartDto;
+import greenbook.portfolio.domain.MemberDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
+import java.math.BigInteger;
+import java.util.List;
+
+@Service
+public class CartService {
+
+    @Autowired
+    CartDao cartDao;
+
+    public void addCart(CartDto cart) {
+        cartDao.addCart(cart);
+    }
+
+    public List<CartDto> getCartList(MemberDto user) {
+        if(user == null)
+            return null;
+        return cartDao.getCartList(user.getMe_id());
+    }
+
+    public void getCartRegister(BigInteger[] checkList, Integer[] cartAmount, String id) {
+        if(checkList == null && id == null) {
+            return;
+        }
+
+        for(int i=0; i<checkList.length; i++) {
+            CartDto dbCart = cartDao.selectCartRegister(checkList[i], id);
+
+            if(dbCart != null) {
+                dbCart.setCa_amount(dbCart.getCa_amount() + cartAmount[i]);
+                cartDao.updateCartRegister(dbCart.getCa_num(), dbCart.getCa_amount());
+            } else {
+                cartDao.getCartRegister(checkList[i],cartAmount[i],id);
+            }
+        }
+
+    }
+}

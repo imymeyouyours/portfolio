@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="greenbook.portfolio.dao.CartMapper">
+    <insert id="addCart" parameterType="CartDto">
+        insert into cart (ca_amount,ca_re_code, ca_me_id)
+        values (#{ca_amount},#{ca_re_code}, #{ca_me_id})
+    </insert>
+
+    <select id="getCartList" resultType="CartDto">
+        select cart.*, bk_mainImg as ca_mainImg, re_title as ca_title, bk_subtitle as ca_subTitle, re_price as ca_price, re_amount as ca_re_amount from cart
+        join registration on ca_re_code = re_code
+        join book on bk_isbn = re_bk_isbn where ca_me_id = #{id} and ca_valid = 'I';
+    </select>
+
+    <select id="selectCartRegister" resultType="CartDto" >
+        select * from book join registration on bk_isbn = re_bk_isbn
+        join cart on re_code = ca_re_code where (bk_isbn=#{bkIsbn} and ca_valid="I" and ca_me_id = #{id})
+    </select>
+
+    <update id="updateCartRegister">
+        update cart set
+        ca_amount = #{amount}
+        where ca_num = #{caNum}
+    </update>
+
+    <insert id="getCartRegister">
+        insert into cart (ca_amount,ca_re_code, ca_me_id)
+        select #{amount}, re_code, #{id} from registration where re_bk_isbn = #{bkIsbn}
+    </insert>
+
+</mapper>

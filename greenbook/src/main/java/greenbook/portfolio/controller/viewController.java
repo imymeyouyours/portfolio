@@ -36,4 +36,9 @@ public class viewController {
         return "/book/details";
     }
 
+    @GetMapping("/cart")
+    public String cart() {
+        return "/order/cart";
+    }
+
 }

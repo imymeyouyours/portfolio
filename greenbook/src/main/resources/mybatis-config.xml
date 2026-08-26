@@ -8,5 +8,6 @@
         <typeAlias alias="MemberDto" type="greenbook.portfolio.domain.MemberDto"/>
         <typeAlias alias="AuthorDto" type="greenbook.portfolio.domain.AuthorDto"/>
         <typeAlias alias="RegistrationDto" type="greenbook.portfolio.domain.RegistrationDto"/>
+        <typeAlias alias="CartDto" type="greenbook.portfolio.domain.CartDto"/>
     </typeAliases>
 </configuration>

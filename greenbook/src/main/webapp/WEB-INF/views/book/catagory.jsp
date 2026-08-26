@@ -461,7 +461,7 @@
             </li>
 
             <li>
-                <a href="<%=request.getContextPath()%>/order/cart">
+                <a href="<%=request.getContextPath()%>/cart">
                     CART
                 </a>
             </li>
@@ -543,7 +543,7 @@
     </ul>
 
 
-    <form action="<%=request.getContextPath()%>/order/cartRegister"
+    <form action="<%=request.getContextPath()%>/api/cartRegister"
           method="post">
 
         <div class="btn-part">
@@ -1355,7 +1355,7 @@
 
                 url:
                     contextPath +
-                    '/order/cart',
+                    '/cart',
 
                 type: 'post',
 
@@ -1387,7 +1387,7 @@
 
                         location.href =
                             contextPath +
-                            '/order/cart';
+                            '/cart';
 
                     }
 
@@ -1413,32 +1413,40 @@
        여러 개 장바구니
        ============================================= */
 
-    $('.addAllCart-btn').click(function() {
+    $('.addAllCart-btn').click(function(e) {
+
+        e.preventDefault();
 
         if (user === '') {
-
-            alert(
-                '회원만 사용 가능합니다.'
-            );
-
-            return false;
-
+            alert('회원만 사용 가능합니다.');
+            return;
         }
 
-
-        if (
-            $('input[name=checkList]:checked')
-                .length === 0
-        ) {
-
-            alert(
-                '선택된 상품이 없습니다.'
-            );
-
-            return false;
-
+        if ($('input[name=checkList]:checked').length === 0) {
+            alert('선택된 상품이 없습니다.');
+            return;
         }
 
+        const form = $(this).closest('form');
+
+        $.ajax({
+            url: contextPath + '/api/cartRegister',
+            type: 'post',
+            data: form.serialize(),
+
+            success: function(result) {
+
+                if (result === 'CART_OK') {
+                    location.href =
+                        contextPath + '/cart';
+                }
+            },
+
+            error: function(error) {
+                console.error(error);
+                alert('장바구니 등록 중 오류가 발생했습니다.');
+            }
+        });
     });
 
 
