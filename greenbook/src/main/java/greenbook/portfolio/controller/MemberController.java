@@ -1,6 +1,9 @@
 package greenbook.portfolio.controller;
 
 import greenbook.portfolio.domain.MemberDto;
+import greenbook.portfolio.domain.PointDto;
+import greenbook.portfolio.pagination.Criteria;
+import greenbook.portfolio.pagination.PageMaker;
 import greenbook.portfolio.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api")
@@ -155,6 +155,61 @@ public class MemberController {
             return new ResponseEntity<>("FIND_ERR", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
+    }
+
+    @GetMapping("/greenpoint")
+    public ResponseEntity<Map<String, Object>> getGreenPoint(
+            Criteria cri,
+            HttpSession session) {
+
+        try {
+            MemberDto member =
+                    (MemberDto) session.getAttribute("user");
+
+            if (member == null) {
+                return new ResponseEntity<>(
+                        HttpStatus.UNAUTHORIZED
+                );
+            }
+
+            PageMaker pm = new PageMaker();
+
+            cri.setPerPageNum(5);
+
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount =
+                    memberService.getTotalCountGreenPoint(
+                            member.getMe_id()
+                    );
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+            List<PointDto> pointList =
+                    memberService.getPointList(
+                            member.getMe_id(),
+                            cri
+                    );
+
+            Map<String, Object> result =
+                    new HashMap<>();
+
+            result.put("member", member);
+            result.put("pointList", pointList);
+            result.put("pm", pm);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(
+                    HttpStatus.BAD_REQUEST
+            );
+        }
     }
 }
 

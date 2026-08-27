@@ -3,6 +3,8 @@ package greenbook.portfolio.service;
 import greenbook.portfolio.dao.MemberDao;
 import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.MemberDto;
+import greenbook.portfolio.domain.PointDto;
+import greenbook.portfolio.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -48,4 +50,12 @@ public class MemberService {
         return memberDao.getAuthorList(re_bk_isbn);
     }
 
+    public int getTotalCountGreenPoint(String id) {
+        return memberDao.getTotalCountGreenPoint(id);
+    }
+
+
+    public List<PointDto> getPointList(String id, Criteria cri) {
+        return memberDao.getPointList(id, cri);
+    }
 }

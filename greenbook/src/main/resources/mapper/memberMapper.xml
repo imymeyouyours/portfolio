@@ -27,4 +27,13 @@
         where bs_bk_isbn = #{re_bk_isbn} and bs_part = '저자'
     </select>
 
+    <select id="getTotalCountGreenPoint" resultType="int">
+        select count(*) from `point` where (po_point != 0 and po_me_id = #{id})
+    </select>
+
+    <select id="getPointList" resultType="PointDto">
+        select * from `point` where (po_me_id  = #{id} and po_point != 0)
+        limit #{cri.pageStart}, #{cri.perPageNum}
+    </select>
+
 </mapper>

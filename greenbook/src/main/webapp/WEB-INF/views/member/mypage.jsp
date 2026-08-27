@@ -179,9 +179,9 @@
     <div class="mypage">MyPage</div>
         <ul class="nav">
         	<li><a href="<%=request.getContextPath()%>/mypage" class="current">주문내역</a></li>
-            <li class="point"><a href="<%=request.getContextPath()%>/member/greenpoint">그린포인트</a></li>
-            <li class="info"><a href="<%=request.getContextPath()%>/member/memberinfo">회원정보</a></li>
-            <li class="out"><a href="<%=request.getContextPath()%>/member/memberout">회원탈퇴</a></li>
+            <li class="point"><a href="<%=request.getContextPath()%>/greenpoint">그린포인트</a></li>
+            <li class="info"><a href="<%=request.getContextPath()%>/memberinfo">회원정보</a></li>
+            <li class="out"><a href="<%=request.getContextPath()%>/memberout">회원탈퇴</a></li>
         </ul>
         <table class="table table-bordered">
             <thead>

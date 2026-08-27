@@ -20,16 +20,26 @@ public class viewController {
     public String findId() {
         return "/member/findid";
     }
+
     @GetMapping("/signup")
     public String signup() {
         return "/member/signup";
     }
 
     @GetMapping("/mypage")
-    public String mypage() { return "/member/mypage";}
+    public String mypage() {
+        return "/member/mypage";
+    }
+
+    @GetMapping("/greenpoint")
+    public String greenPoint() {
+        return "/member/greenpoint";
+    }
 
     @GetMapping("/catagory")
-    public String catagory() { return "/book/catagory";}
+    public String catagory() {
+        return "/book/catagory";
+    }
 
     @GetMapping("/details")
     public String details() {
@@ -45,5 +55,6 @@ public class viewController {
     public String payment() {
         return "/order/payment";
     }
+
 
 }
