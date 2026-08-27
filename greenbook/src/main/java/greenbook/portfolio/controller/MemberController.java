@@ -211,6 +211,80 @@ public class MemberController {
             );
         }
     }
+
+    @GetMapping("/memberinfo")
+    public ResponseEntity<MemberDto> getMemberInfo(
+            HttpSession session) {
+
+        MemberDto user =
+                (MemberDto) session.getAttribute("user");
+
+        if (user == null) {
+            return new ResponseEntity<>(
+                    HttpStatus.UNAUTHORIZED
+            );
+        }
+
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/memberinfo")
+    public ResponseEntity<String> memberInfoPost(
+            @RequestBody MemberDto user,
+            HttpSession session) {
+
+        try {
+
+            MemberDto sessionUser =
+                    (MemberDto) session.getAttribute("user");
+
+            if (sessionUser == null) {
+                return new ResponseEntity<>(
+                        "LOGIN_REQUIRED",
+                        HttpStatus.UNAUTHORIZED
+                );
+            }
+
+            if (!sessionUser.getMe_id()
+                    .equals(user.getMe_id())) {
+
+                return new ResponseEntity<>(
+                        "MEMBER_MISMATCH",
+                        HttpStatus.FORBIDDEN
+                );
+            }
+
+            MemberDto updateUser =
+                    memberService.updateMember(user);
+
+            if (updateUser == null) {
+
+                return new ResponseEntity<>(
+                        "UPDATE_ERR",
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+            session.setAttribute(
+                    "user",
+                    updateUser
+            );
+
+            return new ResponseEntity<>(
+                    "UPDATE_OK",
+                    HttpStatus.OK
+            );
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(
+                    "UPDATE_ERR",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
 }
 
 

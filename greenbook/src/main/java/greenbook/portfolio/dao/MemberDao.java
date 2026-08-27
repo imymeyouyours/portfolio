@@ -53,4 +53,12 @@ public class MemberDao {
 
         return session.selectList(namespace+"getPointList", map);
     }
+
+    public MemberDto getMember(String id) {
+        return session.selectOne(namespace+"getMember",id);
+    }
+
+    public int updateMember(MemberDto dbUser) {
+        return session.update(namespace+"updateMember",dbUser);
+    }
 }

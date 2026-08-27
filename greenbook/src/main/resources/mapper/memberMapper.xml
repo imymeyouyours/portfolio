@@ -36,4 +36,17 @@
         limit #{cri.pageStart}, #{cri.perPageNum}
     </select>
 
+    <update id="updateMember">
+        update member set
+        me_password = #{me_password},
+        me_gender = #{me_gender},
+        me_email = #{me_email},
+        me_address = #{me_address},
+        me_jAddress = #{me_jAddress},
+        me_nickname = #{me_nickname},
+        me_birth = #{me_birth},
+        me_phone = #{me_phone}
+        where me_id = #{me_id}
+    </update>
+
 </mapper>

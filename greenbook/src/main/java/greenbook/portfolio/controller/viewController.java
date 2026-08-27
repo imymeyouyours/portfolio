@@ -36,6 +36,11 @@ public class viewController {
         return "/member/greenpoint";
     }
 
+    @GetMapping("/memberinfo")
+    public String memberinfo() {
+        return "/member/memberinfo";
+    }
+
     @GetMapping("/catagory")
     public String catagory() {
         return "/book/catagory";
