@@ -41,6 +41,11 @@ public class viewController {
         return "/member/memberinfo";
     }
 
+    @GetMapping("/memberout")
+    public String memberout() {
+        return "/member/memberout";
+    }
+
     @GetMapping("/catagory")
     public String catagory() {
         return "/book/catagory";

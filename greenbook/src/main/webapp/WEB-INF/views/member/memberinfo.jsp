@@ -156,6 +156,8 @@
         .menu ul li a {
             font-size: 18px;
             font-weight: bold;
+            color: black;
+            text-decoration: none;
         }
 
 
@@ -501,6 +503,12 @@
 <div class="menu">
 
     <ul>
+
+        <li>
+            <a href="<%=request.getContextPath()%>/logout">
+                LOGOUT
+            </a>
+        </li>
 
         <li>
             <a href="<%=request.getContextPath()%>/mypage">

@@ -511,6 +511,12 @@
     <ul>
 
         <li>
+            <a href="<%=request.getContextPath()%>/logout">
+                LOGOUT
+            </a>
+        </li>
+
+        <li>
             <a href="<%=request.getContextPath()%>/mypage">
                 MYPAGE
             </a>

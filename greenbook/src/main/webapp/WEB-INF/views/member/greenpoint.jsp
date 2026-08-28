@@ -123,6 +123,11 @@
             margin-top: 70px;
         }
 
+
+        /* =========================
+           상단 메뉴
+           ========================= */
+
         .menu {
             display: flex;
             position: absolute;
@@ -134,14 +139,28 @@
         .menu ul li {
             float: left;
             padding: 10px;
-            font-size: 20px;
             font-family: sans-serif;
             font-weight: bold;
+            cursor: pointer;
         }
 
-        .menu a {
+        /* 기존 mypage.jsp와 같은 글자 크기 */
+        .menu ul li a {
+            font-size: 18px;
+            font-weight: bold;
             color: black;
+            text-decoration: none;
         }
+
+        .menu ul li a:hover {
+            color: rgb(0, 104, 136);
+            text-decoration: none;
+        }
+
+
+        /* =========================
+           사이드 메뉴
+           ========================= */
 
         .side-bars {
             width: 400px;
@@ -197,11 +216,18 @@
             position: absolute;
             top: 20px;
             right: 20px;
+            cursor: pointer;
         }
+
     </style>
 </head>
 
 <body>
+
+
+<!-- =========================
+     사이드바
+     ========================= -->
 
 <div class="side-bars bars">
 
@@ -214,43 +240,66 @@
         </ul>
     </div>
 
+
     <div class="subCatagory-list">
 
         <ul class="dome-list">
+
             <li>
                 <a href="<%=request.getContextPath()%>/catagory?re_catagory=소설/시&country=국내/해외">
                     소설/시
                 </a>
             </li>
+
             <li>
                 <a href="<%=request.getContextPath()%>/catagory?re_catagory=에세이&country=국내/해외">
                     에세이
                 </a>
             </li>
+
         </ul>
 
     </div>
 
+
     <div class="subCatagory-list">
 
         <ul class="foreign-list">
+
             <li>
                 <a href="<%=request.getContextPath()%>/catagory?re_catagory=문학&country=외국">
                     문학
                 </a>
             </li>
+
         </ul>
 
     </div>
 
 </div>
 
+
+<!-- 햄버거 메뉴 -->
+
 <i class="fas fa-bars"></i>
 
+
+
+<!-- =========================
+     상단 메뉴
+     ========================= -->
 
 <div class="menu">
 
     <ul>
+
+        <!-- LOGOUT 추가 -->
+        <li>
+            <a href="<%=request.getContextPath()%>/logout">
+                LOGOUT
+            </a>
+        </li>
+
         <li>
             <a href="<%=request.getContextPath()%>/mypage">
                 MYPAGE
@@ -268,16 +317,25 @@
                 HOME
             </a>
         </li>
+
     </ul>
 
 </div>
 
+
+
+<!-- =========================
+     본문
+     ========================= -->
 
 <div class="container">
 
     <div class="mypage">
         MyPage
     </div>
+
+
+    <!-- 마이페이지 메뉴 -->
 
     <ul class="nav">
 
@@ -309,6 +367,11 @@
     </ul>
 
 
+
+    <!-- =========================
+         포인트 정보
+         ========================= -->
+
     <div class="tablePart">
 
         <div class="grade">
@@ -318,6 +381,7 @@
             </i>
 
             <i class="fas fa-question-circle"></i>
+
 
             <div class="tooltip-text">
                 <p>년간 포인트 누적액</p>
@@ -330,29 +394,31 @@
         </div>
 
 
+
         <table class="table">
 
             <thead>
 
-            <tr>
-                <td colspan="4"
-                    class="userPoint">
+                <tr>
+                    <td colspan="4"
+                        class="userPoint">
 
-                    현재 나의 그린 포인트는?
+                        현재 나의 그린 포인트는?
 
-                    <h3 id="memberPoint">
-                        0
-                    </h3>
+                        <h3 id="memberPoint">
+                            0
+                        </h3>
 
-                </td>
-            </tr>
+                    </td>
+                </tr>
 
-            <tr>
-                <th>일자</th>
-                <th>내용</th>
-                <th>주문번호</th>
-                <th>그린포인트</th>
-            </tr>
+
+                <tr>
+                    <th>일자</th>
+                    <th>내용</th>
+                    <th>주문번호</th>
+                    <th>그린포인트</th>
+                </tr>
 
             </thead>
 
@@ -366,11 +432,17 @@
     </div>
 
 
+
+    <!-- =========================
+         페이지네이션
+         ========================= -->
+
     <ul class="pagination justify-content-center"
         id="pagination">
     </ul>
 
 </div>
+
 
 
 <script>
@@ -383,6 +455,11 @@
 
         loadGreenPoint();
 
+
+
+        /* =========================
+           그린포인트 조회
+           ========================= */
 
         function loadGreenPoint() {
 
@@ -441,6 +518,7 @@
                             error
                         );
 
+
                         if (
                             error.status === 401
                         ) {
@@ -456,6 +534,7 @@
                             return;
                         }
 
+
                         alert(
                             '그린포인트 정보를 불러오지 못했습니다.'
                         );
@@ -467,16 +546,23 @@
         }
 
 
+
+        /* =========================
+           회원 정보 출력
+           ========================= */
+
         function renderMember(member) {
 
             if (!member) {
                 return;
             }
 
+
             $('#memberGrade')
                 .text(
                     member.me_grade || ''
                 );
+
 
             $('#memberPoint')
                 .text(
@@ -485,6 +571,11 @@
 
         }
 
+
+
+        /* =========================
+           포인트 목록
+           ========================= */
 
         function renderPointList(pointList) {
 
@@ -513,6 +604,7 @@
 
             pointList.forEach(
                 function(point) {
+
 
                     if (
                         Number(point.po_point) === 0
@@ -554,6 +646,11 @@
         }
 
 
+
+        /* =========================
+           페이지네이션 출력
+           ========================= */
+
         function renderPagination(pm) {
 
             const pagination =
@@ -571,6 +668,7 @@
                 pm.criteria
                     ? pm.criteria.page
                     : 1;
+
 
 
             if (pm.prev) {
@@ -594,6 +692,7 @@
                 );
 
             }
+
 
 
             for (
@@ -631,6 +730,7 @@
             }
 
 
+
             if (pm.next) {
 
                 pagination.append(
@@ -656,6 +756,11 @@
         }
 
 
+
+        /* =========================
+           페이지 클릭
+           ========================= */
+
         $(document).on(
             'click',
             '.page-link',
@@ -675,37 +780,62 @@
         );
 
 
+
+        /* =========================
+           사이드바
+           ========================= */
+
         $('.fa-bars').click(function() {
+
             $('.side-bars').show();
+
         });
 
 
         $('.fa-times').click(function() {
+
             $('.side-bars').hide();
+
         });
 
 
+
         $('.domestic').hover(function() {
+
             $('.foreign-list').hide();
+
             $('.dome-list').show();
+
         });
 
 
         $('.foreign').hover(function() {
+
             $('.dome-list').hide();
+
             $('.foreign-list').show();
+
         });
 
 
+
+        /* =========================
+           등급 설명
+           ========================= */
+
         $('.fa-question-circle')
             .hover(function() {
+
                 $('.tooltip-text').show();
+
             });
 
 
         $('.tooltip-text')
             .mouseleave(function() {
+
                 $(this).hide();
+
             });
 
     });
