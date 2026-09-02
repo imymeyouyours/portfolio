@@ -55,7 +55,6 @@ public class MemberService {
         return memberDao.getTotalCountGreenPoint(id);
     }
 
-
     public List<PointDto> getPointList(String id, Criteria cri) {
         return memberDao.getPointList(id, cri);
     }
@@ -191,5 +190,11 @@ public class MemberService {
         }
 
         return dbUser;
+    }
+
+
+    public MemberDto getMemberId(String id) {
+        if(id == null) return null;
+        return memberDao.getMemberId(id);
     }
 }

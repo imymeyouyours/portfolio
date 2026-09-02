@@ -970,13 +970,6 @@
             success:
                 function(user) {
 
-
-                    console.log(
-                        '회원정보 =',
-                        user
-                    );
-
-
                     $('#id')
                         .val(
                             user.me_id || ''
@@ -1841,14 +1834,6 @@
                         };
 
 
-
-                        console.log(
-                            '회원 수정 data =',
-                            data
-                        );
-
-
-
                         $.ajax({
 
 
@@ -1874,14 +1859,6 @@
 
                             success:
                                 function(result) {
-
-
-                                    console.log(
-                                        '수정 결과 =',
-                                        result
-                                    );
-
-
 
                                     if (
                                         result ===

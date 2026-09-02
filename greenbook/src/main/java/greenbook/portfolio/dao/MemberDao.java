@@ -61,4 +61,8 @@ public class MemberDao {
     public int updateMember(MemberDto dbUser) {
         return session.update(namespace+"updateMember",dbUser);
     }
+
+    public MemberDto getMemberId(String id) {
+        return session.selectOne(namespace+"getMemberId",id);
+    }
 }

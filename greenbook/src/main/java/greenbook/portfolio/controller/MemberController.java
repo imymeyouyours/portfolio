@@ -285,6 +285,71 @@ public class MemberController {
             );
         }
     }
+
+    @ResponseBody
+    @GetMapping("/find/pw/{id}")
+    public String findPw(@PathVariable("id") String id) {
+
+        MemberDto user = memberService.getMemberId(id);
+
+        if (user == null) {
+            return "FAIL";
+        }
+
+        try {
+            String newPw = newPw();
+
+            MimeMessage message = mailSender.createMimeMessage();
+
+            MimeMessageHelper messageHelper =
+                    new MimeMessageHelper(message, true, "UTF-8");
+
+            messageHelper.setFrom("kih9079@naver.com");
+            messageHelper.setTo(user.getMe_email());
+            messageHelper.setSubject("새 비밀번호를 발급합니다.");
+
+            messageHelper.setText(
+                    "",
+                    "발급된 새 비밀번호는 <b>" + newPw + "</b>입니다."
+            );
+
+            // 메일 발송
+            mailSender.send(message);
+
+            // 메일 발송 성공 후 DB 변경
+            user.setMe_password(newPw);
+            memberService.updateMember(user);
+
+            return "SUCCESS";
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "FAIL";
+        }
+    }
+
+    //8자리의 숫자 or 영어대소문자로 된 비밀번호
+    private String newPw() {
+        //랜덤숫자 : 0~9 => 문자열 : 0~9
+        //랜덤숫자 : 10~35 => 문자열 : a~z
+        //랜덤숫자 : 36~61 => 문자열 : A~Z
+        //12 =>c
+        String pw="";
+        int max = 61, min = 0;
+        for(int i=0; i<8; i++) {
+            int r = (int)(Math.random()*(max-min+1)) + min;
+            //int r = (int)(Math.random()*62);
+            if(r <= 9) {
+                pw += r;
+            }else if(r<=35) {
+                pw += (char)('a'+(r-10));
+            }else {
+                pw += (char)('A'+(r-36));
+            }
+        }
+        return pw;
+    }
+
 }
 
 

@@ -66,5 +66,8 @@ public class viewController {
         return "/order/payment";
     }
 
-
+    @GetMapping("/find/pw")
+    public String findpw() {
+        return "/member/findpw";
+    }
 }

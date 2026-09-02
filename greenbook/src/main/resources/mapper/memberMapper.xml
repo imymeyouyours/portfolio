@@ -49,4 +49,8 @@
         where me_id = #{me_id}
     </update>
 
+    <select id="getMemberId" resultType="MemberDto">
+        select * from member where me_id = #{id}
+    </select>
+
 </mapper>
