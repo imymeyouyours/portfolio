@@ -441,8 +441,8 @@
         </c:if>
 
         <c:if test="${user != null && user.me_grade == 'ADMIN'}">
-            <li><a href="${pageContext.request.contextPath}/admin/user/publisherlist">MANAGEMENT</a></li>
-            <li><a href="${pageContext.request.contextPath}/admin/user/orders">ORDERS</a></li>
+            <li><a href="${pageContext.request.contextPath}/publisherlist">MANAGEMENT</a></li>
+            <li><a href="${pageContext.request.contextPath}/orders">ORDERS</a></li>
         </c:if>
     </ul>
     <i class="fas fa-search sm-search"></i>

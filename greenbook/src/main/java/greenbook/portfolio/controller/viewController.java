@@ -70,4 +70,16 @@ public class viewController {
     public String findpw() {
         return "/member/findpw";
     }
+
+    // admin - 관리자 페이지
+    @GetMapping("/publisherlist")
+    public String publisherlist() {
+        return "/admin/publisherlist";
+    }
+
+    @GetMapping("/publisher")
+    public String publisher() {
+        return "/admin/publisher";
+    }
+
 }

@@ -3,6 +3,7 @@ package greenbook.portfolio.dao;
 import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.MemberDto;
 import greenbook.portfolio.domain.PointDto;
+import greenbook.portfolio.domain.PublisherDto;
 import greenbook.portfolio.pagination.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,4 +66,17 @@ public class MemberDao {
     public MemberDto getMemberId(String id) {
         return session.selectOne(namespace+"getMemberId",id);
     }
+
+    public int getTotalCountPublish(Criteria cri) {
+        return session.selectOne(namespace+"getTotalCountPublish", cri);
+    }
+
+    public List<PublisherDto> getPublisherList(Criteria cri) {
+        return session.selectList(namespace+"getPublisherList", cri);
+    }
+
+    public int pubRegister(PublisherDto publisher) {
+        return session.insert(namespace+"pubRegister", publisher);
+    }
+    
 }

@@ -4,6 +4,7 @@ import greenbook.portfolio.dao.MemberDao;
 import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.MemberDto;
 import greenbook.portfolio.domain.PointDto;
+import greenbook.portfolio.domain.PublisherDto;
 import greenbook.portfolio.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -192,9 +193,26 @@ public class MemberService {
         return dbUser;
     }
 
-
     public MemberDto getMemberId(String id) {
         if(id == null) return null;
         return memberDao.getMemberId(id);
+    }
+
+    public int getTotalCountPublish(Criteria cri) {
+        return memberDao.getTotalCountPublish(cri);
+    }
+
+    public List<PublisherDto> getPublisherList(Criteria cri) {
+        return memberDao.getPublisherList(cri);
+    }
+
+    public boolean pubRegister(PublisherDto publisher) {
+        if (publisher == null) {
+            return false;
+        }
+
+        int result = memberDao.pubRegister(publisher);
+
+        return result > 0;
     }
 }
