@@ -1,16 +1,22 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java"
+         contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Publisherlist</title>
+    <meta http-equiv="X-UA-Compatible"
+          content="IE=edge">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Booklist</title>
+
 
     <link rel="stylesheet"
           href="<%=request.getContextPath()%>/resources/css/common.css">
@@ -18,12 +24,16 @@
     <link rel="stylesheet"
           href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script src="https://kit.fontawesome.com/be5943d19e.js"
             crossorigin="anonymous"></script>
+
 
     <style>
 
@@ -209,12 +219,11 @@
 
 </head>
 
+
 <body>
 
-<!-- ======================= -->
-<!-- 사이드 메뉴 -->
-<!-- ======================= -->
 
+<!-- 사이드 메뉴 -->
 <div class="side-bars bars">
 
     <i class="fas fa-times"></i>
@@ -222,11 +231,19 @@
     <div class="catagory-list">
 
         <ul>
-            <li class="domestic">국내도서</li>
-            <li class="foreign">외국도서</li>
+
+            <li class="domestic">
+                국내도서
+            </li>
+
+            <li class="foreign">
+                외국도서
+            </li>
+
         </ul>
 
     </div>
+
 
     <div class="subCatagory-list">
 
@@ -302,6 +319,7 @@
 
     </div>
 
+
     <div class="subCatagory-list">
 
         <ul class="foreign-list">
@@ -354,12 +372,11 @@
 
 </div>
 
+
 <i class="fas fa-bars"></i>
 
-<!-- ======================= -->
-<!-- 상단 메뉴 -->
-<!-- ======================= -->
 
+<!-- 상단 메뉴 -->
 <div class="menu">
 
     <ul>
@@ -380,6 +397,7 @@
 
         </c:if>
 
+
         <c:if test="${user != null}">
 
             <li>
@@ -389,6 +407,7 @@
             </li>
 
         </c:if>
+
 
         <c:if test="${user.me_grade != 'ADMIN'}">
 
@@ -406,6 +425,7 @@
 
         </c:if>
 
+
         <c:if test="${user.me_grade == 'ADMIN'}">
 
             <li>
@@ -415,12 +435,13 @@
             </li>
 
             <li>
-                <a href="<%=request.getContextPath()%>/admin/user/orders">
+                <a href="<%=request.getContextPath()%>/orders">
                     ORDERS
                 </a>
             </li>
 
         </c:if>
+
 
         <li>
             <a href="<%=request.getContextPath()%>/">
@@ -432,27 +453,27 @@
 
 </div>
 
-<!-- ======================= -->
-<!-- 본문 -->
-<!-- ======================= -->
 
 <div class="container">
+
 
     <div class="management">
         Management
     </div>
 
+
+    <!-- 관리 메뉴 -->
     <ul class="nav">
 
         <li>
-            <a href="<%=request.getContextPath()%>/publisherlist"
-               class="current">
+            <a href="<%=request.getContextPath()%>/publisherlist">
                 출판사리스트
             </a>
         </li>
 
         <li>
-            <a href="<%=request.getContextPath()%>/booklist">
+            <a href="<%=request.getContextPath()%>/booklist"
+               class="current">
                 책리스트
             </a>
         </li>
@@ -477,8 +498,8 @@
 
     </ul>
 
-    <!-- 검색 -->
 
+    <!-- 검색 -->
     <div class="search">
 
         <form id="searchForm"
@@ -493,16 +514,21 @@
                 </option>
 
                 <option value="1">
-                    출판사명
+                    제목+내용
+                </option>
+
+                <option value="2">
+                    저자
                 </option>
 
             </select>
 
+
             <input type="text"
                    class="form-control mr-2"
                    id="search"
-                   name="search"
-                   placeholder="검색어">
+                   name="search">
+
 
             <button type="submit"
                     class="btn btn-outline-secondary">
@@ -513,302 +539,87 @@
 
     </div>
 
-    <!-- 출판사 목록 -->
 
+    <!-- 책 리스트 -->
     <table class="table table-bordered">
 
         <thead>
 
         <tr>
-            <th>출판사번호</th>
+
+            <th>ISBN</th>
+
+            <th>책제목</th>
+
+            <th>작가</th>
+
             <th>출판사명</th>
-            <th>전화번호</th>
-            <th>대표자명</th>
+
         </tr>
 
         </thead>
 
-        <tbody id="publisherList">
+
+        <!-- AJAX로 데이터 생성 -->
+        <tbody id="bookList">
+
         </tbody>
 
     </table>
 
-    <!-- 등록 버튼 -->
 
     <div class="regi-btn">
 
-        <a href="<%=request.getContextPath()%>/publisher"
+        <a href="<%=request.getContextPath()%>/book"
            class="btn btn-outline-secondary">
-            출판사등록
+            도서등록
         </a>
 
     </div>
 
-    <!-- 페이지네이션 -->
 
-    <ul id="pagination"
-        class="pagination justify-content-center">
+    <!-- AJAX 페이지네이션 -->
+    <ul class="pagination justify-content-center"
+        id="pagination">
+
     </ul>
 
+
 </div>
+
 
 <script>
 
     $(function () {
 
-        // 처음 목록
-        getPublisherList(1);
+        // 처음 페이지 열었을 때
+        getBookList(1);
+
 
         // 검색
         $('#searchForm').submit(function (e) {
 
             e.preventDefault();
 
-            getPublisherList(1);
+            getBookList(1);
 
         });
 
-        /*
-         * 출판사 목록 API
-         */
-        function getPublisherList(page) {
 
-            const type = $('#type').val();
-            const search = $('#search').val();
-
-            $.ajax({
-
-                type: 'GET',
-
-                url:
-                    '<%=request.getContextPath()%>/api/publisherlist',
-
-                data: {
-                    page: page,
-                    type: type,
-                    search: search
-                },
-
-                dataType: 'json',
-
-                success: function (res) {
-
-                    console.log('출판사 API 응답:', res);
-
-                    drawPublisher(res.publish);
-
-                    drawPagination(res.pm);
-
-                },
-
-                error: function (xhr, status, error) {
-
-                    console.log('출판사 API 호출 실패');
-
-                    console.log('status:', status);
-                    console.log('error:', error);
-                    console.log('response:', xhr.responseText);
-
-                    $('#publisherList').html(
-                        '<tr>' +
-                        '<td colspan="4" class="text-center">' +
-                        '출판사 목록을 불러오지 못했습니다.' +
-                        '</td>' +
-                        '</tr>'
-                    );
-
-                }
-
-            });
-
-        }
-
-        /*
-         * 출판사 목록 출력
-         */
-        function drawPublisher(publish) {
-
-            let html = '';
-
-            if (publish == null || publish.length === 0) {
-
-                html +=
-                    '<tr>' +
-                    '<td colspan="4" class="text-center">' +
-                    '등록된 출판사가 없습니다.' +
-                    '</td>' +
-                    '</tr>';
-
-            } else {
-
-                $.each(publish, function (index, publisher) {
-
-                    html +=
-                        '<tr>' +
-
-                        '<td>' +
-                        publisher.pu_num +
-                        '</td>' +
-
-                        '<td>' +
-
-                        '<a href="' +
-                        '<%=request.getContextPath()%>' +
-                        '/admin/user/publisherdetails?pu_num=' +
-                        publisher.pu_num +
-                        '">' +
-
-                        publisher.pu_name +
-
-                        '</a>' +
-
-                        '</td>' +
-
-                        '<td>' +
-                        publisher.pu_phone +
-                        '</td>' +
-
-                        '<td>' +
-                        publisher.pu_ceo +
-                        '</td>' +
-
-                        '</tr>';
-
-                });
-
-            }
-
-            $('#publisherList').html(html);
-
-        }
-
-        /*
-         * 페이지네이션
-         */
-        function drawPagination(pm) {
-
-            let html = '';
-
-            if (pm == null) {
-
-                $('#pagination').html('');
-
-                return;
-            }
-
-            // 이전
-            if (pm.prev) {
-
-                html +=
-                    '<li class="page-item">' +
-
-                    '<a class="page-link page-btn" ' +
-                    'href="#" ' +
-                    'data-page="' +
-                    (pm.startPage - 1) +
-                    '">' +
-
-                    '이전' +
-
-                    '</a>' +
-
-                    '</li>';
-
-            }
-
-            // 페이지 번호
-            for (
-                let i = pm.startPage;
-                i <= pm.endPage;
-                i++
-            ) {
-
-                let active = '';
-
-                if (
-                    pm.criteria != null &&
-                    Number(pm.criteria.page) === i
-                ) {
-
-                    active = 'active';
-
-                }
-
-                html +=
-                    '<li class="page-item ' +
-                    active +
-                    '">' +
-
-                    '<a class="page-link page-btn" ' +
-                    'href="#" ' +
-                    'data-page="' +
-                    i +
-                    '">' +
-
-                    i +
-
-                    '</a>' +
-
-                    '</li>';
-
-            }
-
-            // 다음
-            if (pm.next) {
-
-                html +=
-                    '<li class="page-item">' +
-
-                    '<a class="page-link page-btn" ' +
-                    'href="#" ' +
-                    'data-page="' +
-                    (pm.endPage + 1) +
-                    '">' +
-
-                    '다음' +
-
-                    '</a>' +
-
-                    '</li>';
-
-            }
-
-            $('#pagination').html(html);
-
-        }
-
-        /*
-         * 페이지 클릭
-         */
-        $(document).on(
-            'click',
-            '.page-btn',
-            function (e) {
-
-                e.preventDefault();
-
-                const page =
-                    $(this).data('page');
-
-                getPublisherList(page);
-
-            }
-        );
-
-        /*
-         * 사이드바
-         */
+        // 사이드 메뉴
         $('.fa-bars').click(function () {
 
             $('.side-bars').show();
 
         });
 
+
         $('.fa-times').click(function () {
 
             $('.side-bars').hide();
 
         });
+
 
         $('.domestic').hover(function () {
 
@@ -818,6 +629,7 @@
 
         });
 
+
         $('.foreign').hover(function () {
 
             $('.dome-list').hide();
@@ -826,8 +638,10 @@
 
         });
 
+
         var prevScrollTop = 0;
         var nowScrollTop = 0;
+
 
         function wheelDelta() {
 
@@ -837,28 +651,301 @@
 
         }
 
-        $(window).on(
-            'scroll',
-            function () {
 
-                nowScrollTop =
-                    $(this).scrollTop();
+        $(window).on('scroll', function () {
 
-                if (wheelDelta() === 'down') {
+            nowScrollTop = $(this).scrollTop();
 
-                    $('.bars').fadeOut();
+            if (wheelDelta() === 'down') {
 
-                }
-
-                prevScrollTop =
-                    nowScrollTop;
+                $('.bars').fadeOut();
 
             }
-        );
+
+            prevScrollTop = nowScrollTop;
+
+        });
 
     });
 
+
+
+    // ==============================
+    // 책 목록 API
+    // ==============================
+
+    function getBookList(page) {
+
+        const type = $('#type').val();
+
+        const search = $('#search').val();
+
+
+        $.ajax({
+
+            type: 'GET',
+
+            url: '<%=request.getContextPath()%>/api/booklist',
+
+            data: {
+
+                page: page,
+
+                type: type,
+
+                search: search
+
+            },
+
+            dataType: 'json',
+
+
+            success: function (res) {
+
+                console.log('책 목록 API 응답:', res);
+
+                drawBookList(res.list);
+
+                drawPagination(res.pm);
+
+            },
+
+
+            error: function (xhr, status, error) {
+
+                console.log('책 목록 조회 실패:', error);
+
+                console.log(xhr.responseText);
+
+                alert('책 목록을 불러오는데 실패했습니다.');
+
+            }
+
+        });
+
+    }
+
+
+
+    // ==============================
+    // 책 목록 출력
+    // ==============================
+
+    function drawBookList(list) {
+
+        const $bookList = $('#bookList');
+
+        $bookList.empty();
+
+
+        if (!list || list.length === 0) {
+
+            $bookList.append(
+
+                '<tr>' +
+
+                    '<td colspan="4" class="text-center">' +
+
+                        '등록된 도서가 없습니다.' +
+
+                    '</td>' +
+
+                '</tr>'
+
+            );
+
+            return;
+
+        }
+
+
+        list.forEach(function (book) {
+
+            const url =
+                '<%=request.getContextPath()%>/bookdetails'
+                + '?bk_isbn='
+                + encodeURIComponent(book.bk_isbn);
+
+
+            const html =
+
+                '<tr>' +
+
+                    '<td>'
+                        + escapeHtml(book.bk_isbn)
+                    + '</td>' +
+
+                    '<td>' +
+
+                        '<a href="' + url + '">' +
+
+                            escapeHtml(book.bk_title) +
+
+                        '</a>' +
+
+                    '</td>' +
+
+                    '<td>'
+                        + escapeHtml(book.bk_au_writer)
+                    + '</td>' +
+
+                    '<td>'
+                        + escapeHtml(book.bk_publish)
+                    + '</td>' +
+
+                '</tr>';
+
+
+            $bookList.append(html);
+
+        });
+
+    }
+
+
+
+    // ==============================
+    // 페이지네이션
+    // ==============================
+
+    function drawPagination(pm) {
+
+        const $pagination = $('#pagination');
+
+        $pagination.empty();
+
+
+        if (!pm) {
+
+            return;
+
+        }
+
+
+        /*
+         * PageMaker에서
+         *
+         * getCriteria()
+         *
+         * getter를 가지고 있으면 JSON은
+         *
+         * pm.criteria
+         *
+         * 로 내려온다.
+         */
+
+        const currentPage = pm.criteria
+            ? pm.criteria.page
+            : 1;
+
+
+        // 이전
+        if (pm.prev) {
+
+            $pagination.append(
+
+                '<li class="page-item">' +
+
+                    '<a class="page-link" href="#" ' +
+
+                       'onclick="getBookList('
+                            + (pm.startPage - 1)
+                            + '); return false;">' +
+
+                        '이전' +
+
+                    '</a>' +
+
+                '</li>'
+
+            );
+
+        }
+
+
+        // 페이지 번호
+        for (let i = pm.startPage; i <= pm.endPage; i++) {
+
+            let active = '';
+
+            if (currentPage === i) {
+
+                active = ' active';
+
+            }
+
+
+            $pagination.append(
+
+                '<li class="page-item'
+                    + active
+                    + '">' +
+
+                    '<a class="page-link" href="#" ' +
+
+                       'onclick="getBookList('
+                            + i
+                            + '); return false;">' +
+
+                        i +
+
+                    '</a>' +
+
+                '</li>'
+
+            );
+
+        }
+
+
+        // 다음
+        if (pm.next) {
+
+            $pagination.append(
+
+                '<li class="page-item">' +
+
+                    '<a class="page-link" href="#" ' +
+
+                       'onclick="getBookList('
+                            + (pm.endPage + 1)
+                            + '); return false;">' +
+
+                        '다음' +
+
+                    '</a>' +
+
+                '</li>'
+
+            );
+
+        }
+
+    }
+
+
+
+    // ==============================
+    // HTML 문자 처리
+    // ==============================
+
+    function escapeHtml(value) {
+
+        if (value === null || value === undefined) {
+
+            return '';
+
+        }
+
+
+        return $('<div>')
+            .text(value)
+            .html();
+
+    }
+
 </script>
+
 
 </body>
 

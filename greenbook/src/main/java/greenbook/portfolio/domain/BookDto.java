@@ -1,13 +1,13 @@
 package greenbook.portfolio.domain;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-@Getter
+@Data
 public class BookDto {
     private BigInteger bk_isbn;
     private String bk_title;
@@ -28,4 +28,5 @@ public class BookDto {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         return format.format(bk_publish_date);
     }
+
 }

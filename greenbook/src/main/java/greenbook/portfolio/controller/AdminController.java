@@ -1,15 +1,19 @@
 package greenbook.portfolio.controller;
 
+import greenbook.portfolio.domain.BookDto;
 import greenbook.portfolio.domain.PublisherDto;
 import greenbook.portfolio.pagination.Criteria;
 import greenbook.portfolio.pagination.PageMaker;
+import greenbook.portfolio.service.BookService;
 import greenbook.portfolio.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +25,9 @@ public class AdminController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    BookService bookService;
 
     @GetMapping("/publisherlist")
     public ResponseEntity<Map<String, Object>> publisherList(Criteria cri) {
@@ -93,6 +100,93 @@ public class AdminController {
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(result);
         }
+    }
+
+    @GetMapping("/booklist")
+    public ResponseEntity<Map<String, Object>> bookList(Criteria cri) {
+
+        Map<String, Object> result = new HashMap<>();
+
+        try {
+            cri.setPerPageNum(5);
+
+            PageMaker pm = new PageMaker();
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount = bookService.getTotalCount(cri);
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+            List<BookDto> list = bookService.getBookList(cri);
+
+            result.put("list", list);
+            result.put("pm", pm);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            result.put("message", "도서 목록을 불러오는데 실패했습니다.");
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(result);
+        }
+    }
+
+    @PostMapping("/book")
+    public ResponseEntity<Boolean> adminBookPost(
+            BookDto book,
+            @RequestParam("file") MultipartFile file) {
+
+        boolean isBookRegister = bookService.bookRegister(book, file);
+
+        if (isBookRegister) {
+            return ResponseEntity.ok(true);
+        }
+
+        return ResponseEntity.badRequest().body(false);
+    }
+
+
+    @GetMapping("/bookdetails")
+    public ResponseEntity<BookDto> bookDetails(
+            @RequestParam("bk_isbn") BigInteger bk_isbn) {
+
+        try {
+
+            BookDto book = bookService.getBookDetails(bk_isbn);
+
+            if (book == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(book);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("/bookdetails")
+    public ResponseEntity<Boolean> modifyBookPost(
+            BookDto book,
+            @RequestParam(value = "file", required = false) MultipartFile file) {
+
+        int result = bookService.updateBook(book, file);
+
+        if (result > 0) {
+            return ResponseEntity.ok(true);
+        }
+
+        return ResponseEntity.badRequest().body(false);
     }
 
 }

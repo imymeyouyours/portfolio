@@ -69,4 +69,20 @@ public class BookDao {
         return session.selectOne(namespace+"selectRegi", re_bk_isbn);
     }
 
+    public int getTotalCount(Criteria cri) {
+        return session.selectOne(namespace+"getTotalCount", cri);
+    }
+
+    public List<BookDto> getBookList(Criteria cri) {
+        return session.selectList(namespace+"getBookList", cri);
+    }
+
+    public int getBookInfo(BookDto book) {
+        return session.insert(namespace+"getBookInfo",book);
+    }
+
+    public int updateBook(BookDto book) {
+        return session.update(namespace+"updateBook", book);
+    }
+
 }

@@ -59,4 +59,71 @@
     <select id="selectRegi" resultType="RegistrationDto">
         select * from registration where re_bk_isbn = #{re_bk_isbn}
     </select>
+
+    <select id="getTotalCount" resultType="int">
+        select count(*) from book
+    </select>
+
+    <select id="getBookList" resultType="BookDto">
+        select * from book
+        <if test="type==0">
+            where (bk_isbn like concat('%',#{search},'%')
+            or bk_title like concat('%',#{search},'%')
+            or bk_subtitle like concat('%',#{search},'%')
+            or bk_au_writer like concat('%',#{search},'%')
+            or bk_country like concat('%',#{search},'%')
+            or bk_publish like concat('%',#{search},'%'))
+        </if>
+        <if test="type==1">
+            where (bk_title like concat('%',#{search},'%')
+            or bk_subtitle like concat('%',#{search},'%'))
+        </if>
+        <if test="type==2">
+            where bk_au_writer like concat('%',#{search},'%')
+        </if>
+        limit #{pageStart}, #{perPageNum}
+    </select>
+
+    <insert id="getBookInfo" parameterType="BookDto">
+        INSERT INTO book (
+        bk_isbn,
+        bk_title,
+        bk_subtitle,
+        bk_au_writer,
+        bk_publish,
+        bk_page,
+        bk_publish_date,
+        bk_mainImg,
+        bk_pu_num,
+        bk_country
+        )
+        VALUES (
+        #{bk_isbn},
+        #{bk_title},
+        #{bk_subtitle},
+        #{bk_au_writer},
+        #{bk_publish},
+        #{bk_page},
+        #{bk_publish_date},
+        #{bk_mainImg},
+        #{bk_pu_num},
+        #{bk_country}
+        )
+    </insert>
+
+    <update id="updateBook">
+        update book set
+        bk_isbn = #{bk_isbn},
+        bk_title = #{bk_title},
+        bk_subtitle= #{bk_subtitle},
+        bk_au_writer= #{bk_au_writer},
+        bk_publish = #{bk_publish},
+        bk_mainImg = #{bk_mainImg},
+        bk_page = #{bk_page},
+        bk_publish_date = #{bk_publish_date},
+        bk_pu_num = #{bk_pu_num},
+        bk_country = #{bk_country}
+        where bk_isbn = #{bk_isbn}
+    </update>
+
 </mapper>
