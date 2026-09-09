@@ -470,7 +470,7 @@
         </li>
 
         <li>
-            <a href="<%=request.getContextPath()%>/admin/user/registrationlist">
+            <a href="<%=request.getContextPath()%>/registrationlist">
                 판매가능서적
             </a>
         </li>

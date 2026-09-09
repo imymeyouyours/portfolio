@@ -1,9 +1,6 @@
 package greenbook.portfolio.controller;
 
-import greenbook.portfolio.domain.AuthorDto;
-import greenbook.portfolio.domain.BookDto;
-import greenbook.portfolio.domain.BooksDto;
-import greenbook.portfolio.domain.PublisherDto;
+import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import greenbook.portfolio.pagination.PageMaker;
 import greenbook.portfolio.service.BookService;
@@ -407,6 +404,126 @@ public class AdminController {
 
             int result =
                     memberService.booksRegi(books);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
+    }
+
+
+    @GetMapping("/registrationlist")
+    public ResponseEntity<Map<String, Object>> regiBookList(
+            Criteria cri) {
+
+        try {
+
+            cri.setPerPageNum(5);
+
+            PageMaker pm = new PageMaker();
+
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount =
+                    bookService.getTotalCountRegi();
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+            List<RegistrationDto> regi =
+                    bookService.regiBookList(cri);
+
+            Map<String, Object> result =
+                    new HashMap<>();
+
+            result.put("regi", regi);
+            result.put("pm", pm);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @GetMapping("/registrationdetails")
+    public ResponseEntity<RegistrationDto> registrationDetails(
+            @RequestParam("re_code") Integer re_code) {
+
+        try {
+
+            RegistrationDto regi =
+                    bookService.getRegiBook(re_code);
+
+            if (regi == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(regi);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("/registrationdetails")
+    public ResponseEntity<Boolean> regiBookPost(
+            RegistrationDto regi) {
+
+        try {
+
+            int result =
+                    bookService.updateRegi(regi);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
+    }
+
+    @PostMapping("/registration")
+    public ResponseEntity<Boolean> registrationPost(
+            RegistrationDto registration) {
+
+        try {
+
+            int result =
+                    bookService.regiBook(registration);
 
             if (result > 0) {
                 return ResponseEntity.ok(true);

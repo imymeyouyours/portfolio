@@ -127,4 +127,18 @@ public class viewController {
         return "/admin/books";
     }
 
+    @GetMapping("/registrationlist")
+    public String registerationlist() {
+        return "/admin/registrationlist";
+    }
+
+    @GetMapping("/registrationdetails")
+    public String registrationdetails() {
+        return "/admin/registrationdetails";
+    }
+
+    @GetMapping("/registration")
+    public String registration() {
+        return "/admin/registration";
+    }
 }

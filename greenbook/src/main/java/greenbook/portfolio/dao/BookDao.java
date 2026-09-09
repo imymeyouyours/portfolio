@@ -85,4 +85,24 @@ public class BookDao {
         return session.update(namespace+"updateBook", book);
     }
 
+    public int getTotalCountRegi() {
+        return session.selectOne(namespace+"getTotalCountRegi");
+    }
+
+    public List<RegistrationDto> regiBookList(Criteria cri) {
+        return session.selectList(namespace+"regiBookList",cri);
+    }
+
+    public RegistrationDto getRegiBook(Integer re_code) {
+        return session.selectOne(namespace+"getRegiBook", re_code);
+    }
+
+    public int updateRegi(RegistrationDto regi) {
+        return session.update(namespace+"updateRegi", regi);
+    }
+
+    public int regiBook(RegistrationDto regi) {
+        return session.update(namespace+"regiBook", regi);
+    }
+
 }

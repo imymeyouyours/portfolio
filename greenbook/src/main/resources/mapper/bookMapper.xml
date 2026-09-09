@@ -126,4 +126,53 @@
         where bk_isbn = #{bk_isbn}
     </update>
 
+    <select id="getTotalCountRegi" resultType="int">
+        select count(*) from registration
+    </select>
+
+    <select id="regiBookList" resultType="RegistrationDto">
+        select * from registration
+        <if test="type==0">
+            where (re_code like concat('%',#{search},'%')
+            or re_bk_isbn like concat('%',#{search},'%')
+            or re_title like concat('%',#{search},'%')
+            or re_price like concat('%',#{search},'%')
+            or re_amount like concat('%',#{search},'%')
+            or re_catagory like concat('%',#{search},'%')
+            or re_contents like concat('%',#{search},'%')
+            or re_choice like concat('%',#{search},'%')
+            )
+        </if>
+        <if test="type==1">
+            where (re_title like concat('%',#{search},'%')
+            or re_contents like concat('%',#{search},'%'))
+        </if>
+        <if test="type==2">
+            where re_catagory like concat('%',#{search},'%')
+        </if>
+        limit #{pageStart}, #{perPageNum}
+    </select>
+
+    <select id="getRegiBook" resultType="RegistrationDto">
+        select * from registration where re_code = #{re_code}
+    </select>
+
+    <update id="updateRegi">
+        update registration set
+        re_code = #{re_code},
+        re_bk_isbn = #{re_bk_isbn},
+        re_title = #{re_title},
+        re_price = #{re_price},
+        re_amount = #{re_amount},
+        re_catagory = #{re_catagory},
+        re_contents = #{re_contents},
+        re_choice = #{re_choice}
+        where re_code = #{re_code}
+    </update>
+
+    <insert id="regiBook">
+        insert into registration(re_code, re_bk_isbn, re_title, re_price, re_amount, re_catagory, re_contents, re_choice)
+        values(#{re_code}, #{re_bk_isbn}, #{re_title}, #{re_price}, #{re_amount}, #{re_catagory}, #{re_contents}, #{re_choice})
+    </insert>
+
 </mapper>

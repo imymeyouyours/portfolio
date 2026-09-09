@@ -115,4 +115,31 @@ public class BookService {
             return 0;
         }
     }
+
+    public int getTotalCountRegi(){
+        return bookDao.getTotalCountRegi();
+    }
+
+    public List<RegistrationDto> regiBookList(Criteria cri) {
+        return bookDao.regiBookList(cri);
+    }
+
+    public RegistrationDto getRegiBook(Integer re_code) {
+        if(re_code == null) return null;
+        return bookDao.getRegiBook(re_code);
+    }
+
+    public int updateRegi(RegistrationDto regi) {
+
+        if (regi == null) {
+            return 0;
+        }
+
+        return bookDao.updateRegi(regi);
+    }
+
+    public int regiBook(RegistrationDto regi) {
+        if(regi == null) return 0;
+        return bookDao.regiBook(regi);
+    }
 }
