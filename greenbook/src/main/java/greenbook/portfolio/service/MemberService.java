@@ -215,4 +215,43 @@ public class MemberService {
 
         return result > 0;
     }
+
+    public int getTotalCountAuthor(Criteria cri) {
+        return memberDao.getTotalCountAuthor(cri);
+    }
+
+    public List<AuthorDto> authorList(Criteria cri) {
+        return memberDao.authorList(cri);
+    }
+
+    public AuthorDto getAuthor(Integer au_num) {
+        if(au_num == null) return  null;
+        return memberDao.getAuthor(au_num);
+    }
+
+    public int authRegister(AuthorDto author) {
+        if(author == null) return 0;
+        return memberDao.authRegister(author);
+    }
+
+    public int updateAuth(AuthorDto author) {
+
+        if (author == null) {
+            return 0;
+        }
+
+        AuthorDto dbAuth =
+                memberDao.getAuthor(author.getAu_num());
+
+        if (dbAuth == null) {
+            return 0;
+        }
+
+        dbAuth.setAu_birth(author.getAu_birth());
+        dbAuth.setAu_contents(author.getAu_contents());
+        dbAuth.setAu_title(author.getAu_title());
+        dbAuth.setAu_writer(author.getAu_writer());
+
+        return memberDao.updateAuth(dbAuth);
+    }
 }

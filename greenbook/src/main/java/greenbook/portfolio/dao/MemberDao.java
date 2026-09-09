@@ -78,5 +78,25 @@ public class MemberDao {
     public int pubRegister(PublisherDto publisher) {
         return session.insert(namespace+"pubRegister", publisher);
     }
-    
+
+    public int getTotalCountAuthor(Criteria cri) {
+        return session.selectOne(namespace+"getTotalCountAuthor", cri);
+    }
+
+    public List<AuthorDto> authorList(Criteria cri) {
+        return session.selectList(namespace+"authorList", cri);
+    }
+
+    public AuthorDto getAuthor(Integer au_num) {
+        return session.selectOne(namespace + "getAuthor", au_num);
+    }
+
+    public int authRegister(AuthorDto author) {
+        return session.insert(namespace+"authRegister", author);
+    }
+
+    public int updateAuth(AuthorDto dbAuth) {
+        return session.update(namespace + "updateAuth", dbAuth);
+    }
+
 }

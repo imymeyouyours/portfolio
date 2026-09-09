@@ -479,7 +479,7 @@
         </li>
 
         <li>
-            <a href="<%=request.getContextPath()%>/admin/user/authorlist">
+            <a href="<%=request.getContextPath()%>/authorlist">
                 저자리스트
             </a>
         </li>

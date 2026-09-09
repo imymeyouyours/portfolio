@@ -1,5 +1,6 @@
 package greenbook.portfolio.controller;
 
+import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.BookDto;
 import greenbook.portfolio.domain.PublisherDto;
 import greenbook.portfolio.pagination.Criteria;
@@ -187,6 +188,122 @@ public class AdminController {
         }
 
         return ResponseEntity.badRequest().body(false);
+    }
+
+
+    @GetMapping("/authorlist")
+    public ResponseEntity<Map<String, Object>> authorList(Criteria cri) {
+
+        try {
+
+            cri.setPerPageNum(5);
+
+            PageMaker pm = new PageMaker();
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount =
+                    memberService.getTotalCountAuthor(cri);
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+            List<AuthorDto> author =
+                    memberService.authorList(cri);
+
+            Map<String, Object> result = new HashMap<>();
+
+            result.put("author", author);
+            result.put("pm", pm);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @GetMapping("/authordetails")
+    public ResponseEntity<AuthorDto> authorDetails(
+            @RequestParam("au_num") Integer au_num) {
+
+        try {
+
+            AuthorDto author =
+                    memberService.getAuthor(au_num);
+
+            if (author == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(author);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("/authordetails")
+    public ResponseEntity<Boolean> modifyAuthPost(
+            AuthorDto author) {
+
+        try {
+
+            int result =
+                    memberService.updateAuth(author);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
+    }
+
+    @PostMapping("/author")
+    public ResponseEntity<Boolean> authorPost(AuthorDto author) {
+
+        try {
+
+            int result =
+                    memberService.authRegister(author);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
     }
 
 }

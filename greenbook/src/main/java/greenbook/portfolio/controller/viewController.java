@@ -97,4 +97,19 @@ public class viewController {
         return "/admin/bookdetails";
     }
 
+    @GetMapping("/authorlist")
+    public String authorlist() {
+        return "/admin/authorlist";
+    }
+
+    @GetMapping("/authordetails")
+    public String authordetails() {
+        return "/admin/authordetails";
+    }
+
+    @GetMapping("/author")
+    public String author() {
+        return "/admin/author";
+    }
+
 }

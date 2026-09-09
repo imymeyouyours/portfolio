@@ -93,4 +93,46 @@
         values(#{pu_name}, #{pu_phone}, #{pu_ceo})
     </insert>
 
+    <select id="getTotalCountAuthor" resultType="int">
+        select count(*) from author
+    </select>
+
+    <select id="authorList" resultType = "AuthorDto">
+        select * from author
+        <if test="type==0">
+            where (au_num like concat('%',#{search},'%')
+            or au_writer like concat('%',#{search},'%')
+            or au_title like concat('%',#{search},'%')
+            or au_contents like concat('%',#{search},'%')
+            or au_birth like concat('%',#{search},'%'))
+        </if>
+        <if test="type==1">
+            where (au_title like concat('%',#{search},'%')
+            or au_contents like concat('%',#{search},'%'))
+        </if>
+        <if test="type==2">
+            where au_writer like concat('%',#search},'%')
+        </if>
+        limit #{pageStart}, #{perPageNum}
+    </select>
+
+    <select id="getAuthor" resultType="AuthorDto">
+        select * from author where au_num = #{au_num}
+    </select>
+
+    <insert id="authRegister">
+        insert into author (au_num, au_writer, au_title, au_contents, au_birth)
+        values(#{au_num}, #{au_writer}, #{au_title}, #{au_contents}, #{au_birth})
+    </insert>
+
+    <update id="updateAuth">
+        update author set
+        au_num = #{au_num},
+        au_writer = #{au_writer},
+        au_title = #{au_title},
+        au_contents = #{au_contents},
+        au_birth = #{au_birth}
+        where au_num = #{au_num}
+    </update>
+
 </mapper>
