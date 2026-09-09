@@ -368,6 +368,12 @@
         </li>
 
         <li>
+            <a href="<%=request.getContextPath()%>/orders">
+                ORDERS
+            </a>
+        </li>
+
+        <li>
             <a href="<%=request.getContextPath()%>/">
                 HOME
             </a>
@@ -376,7 +382,6 @@
     </ul>
 
 </div>
-
 
 <div class="container">
 

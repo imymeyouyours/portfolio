@@ -1,9 +1,6 @@
 package greenbook.portfolio.dao;
 
-import greenbook.portfolio.domain.AuthorDto;
-import greenbook.portfolio.domain.MemberDto;
-import greenbook.portfolio.domain.PointDto;
-import greenbook.portfolio.domain.PublisherDto;
+import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,4 +96,23 @@ public class MemberDao {
         return session.update(namespace + "updateAuth", dbAuth);
     }
 
+    public int getTotalCountBooks(){
+        return session.selectOne(namespace+"getTotalCountBooks");
+    }
+
+    public List<BooksDto> getbooksList(Criteria cri) {
+        return session.selectList(namespace + "getBooksList", cri);
+    }
+
+    public BooksDto getBooks(Integer bs_num) {
+        return session.selectOne(namespace+"getBooks", bs_num);
+    }
+
+    public int updateBooks(BooksDto books) {
+        return session.update(namespace+"updateBooks", books);
+    }
+
+    public int booksRegi(BooksDto books) {
+        return session.insert(namespace+"booksRegi", books);
+    }
 }

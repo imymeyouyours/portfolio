@@ -464,7 +464,7 @@
         </li>
 
         <li>
-            <a href="<%=request.getContextPath()%>/admin/user/bookslist">
+            <a href="<%=request.getContextPath()%>/bookslist">
                 저서리스트
             </a>
         </li>

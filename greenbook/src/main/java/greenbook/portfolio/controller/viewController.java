@@ -112,4 +112,19 @@ public class viewController {
         return "/admin/author";
     }
 
+    @GetMapping("/bookslist")
+    public String bookslist() {
+        return "/admin/bookslist";
+    }
+
+    @GetMapping("/booksdetails")
+    public String booksdetails() {
+        return "/admin/booksdetails";
+    }
+
+    @GetMapping("/books")
+    public String books() {
+        return "/admin/books";
+    }
+
 }

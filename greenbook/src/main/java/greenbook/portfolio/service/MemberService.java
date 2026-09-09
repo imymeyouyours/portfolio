@@ -1,10 +1,7 @@
 package greenbook.portfolio.service;
 
 import greenbook.portfolio.dao.MemberDao;
-import greenbook.portfolio.domain.AuthorDto;
-import greenbook.portfolio.domain.MemberDto;
-import greenbook.portfolio.domain.PointDto;
-import greenbook.portfolio.domain.PublisherDto;
+import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -254,4 +251,25 @@ public class MemberService {
 
         return memberDao.updateAuth(dbAuth);
     }
+
+    public int getTotalCountBooks() {
+        return memberDao.getTotalCountBooks();
+    }
+
+    public List<BooksDto> getbooksList(Criteria cri) {
+        return memberDao.getbooksList(cri);
+    }
+
+    public BooksDto getBooks(Integer bs_num) {
+        return memberDao.getBooks(bs_num);
+    }
+
+    public int updateBooks(BooksDto books) {
+        return memberDao.updateBooks(books);
+    }
+
+    public int booksRegi(BooksDto books) {
+        return memberDao.booksRegi(books);
+    }
+
 }

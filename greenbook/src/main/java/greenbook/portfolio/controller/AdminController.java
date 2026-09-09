@@ -2,6 +2,7 @@ package greenbook.portfolio.controller;
 
 import greenbook.portfolio.domain.AuthorDto;
 import greenbook.portfolio.domain.BookDto;
+import greenbook.portfolio.domain.BooksDto;
 import greenbook.portfolio.domain.PublisherDto;
 import greenbook.portfolio.pagination.Criteria;
 import greenbook.portfolio.pagination.PageMaker;
@@ -287,6 +288,125 @@ public class AdminController {
 
             int result =
                     memberService.authRegister(author);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
+    }
+
+
+    @GetMapping("/bookslist")
+    public ResponseEntity<Map<String, Object>> booksList(Criteria cri) {
+
+        try {
+
+            cri.setPerPageNum(5);
+
+            PageMaker pm = new PageMaker();
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount =
+                    memberService.getTotalCountBooks();
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+            List<BooksDto> books =
+                    memberService.getbooksList(cri);
+
+            Map<String, Object> result =
+                    new HashMap<>();
+
+            result.put("books", books);
+            result.put("pm", pm);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @GetMapping("/booksdetails")
+    public ResponseEntity<BooksDto> booksDetails(
+            @RequestParam("bs_num") Integer bs_num) {
+
+        try {
+
+            BooksDto books =
+                    memberService.getBooks(bs_num);
+
+            if (books == null) {
+                return ResponseEntity
+                        .notFound()
+                        .build();
+            }
+
+            return ResponseEntity.ok(books);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("/booksdetails")
+    public ResponseEntity<Boolean> booksDetailsPost(
+            BooksDto books) {
+
+        try {
+
+            int result =
+                    memberService.updateBooks(books);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
+    }
+
+    @PostMapping("/books")
+    public ResponseEntity<Boolean> booksPost(BooksDto books) {
+
+        try {
+
+            int result =
+                    memberService.booksRegi(books);
 
             if (result > 0) {
                 return ResponseEntity.ok(true);
