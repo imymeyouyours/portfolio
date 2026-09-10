@@ -101,6 +101,57 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/publisherdetails")
+    public ResponseEntity<PublisherDto> publisherDetails(
+            @RequestParam("pu_num") Integer pu_num) {
+
+        try {
+
+            PublisherDto publisher =
+                    memberService.getPublisher(pu_num);
+
+            if (publisher == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(publisher);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
+        }
+    }
+
+    @PostMapping("/publisherdetails")
+    public ResponseEntity<Boolean> modifyPubPost(
+            PublisherDto publisher) {
+
+        try {
+
+            int result = memberService.updatePub(publisher);
+
+            if (result > 0) {
+                return ResponseEntity.ok(true);
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body(false);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(false);
+        }
+    }
+
     @GetMapping("/booklist")
     public ResponseEntity<Map<String, Object>> bookList(Criteria cri) {
 

@@ -88,6 +88,19 @@
 
     </select>
 
+    <select id="getPublisher" resultType = "PublisherDto">
+        select * from publisher where pu_num = #{pu_num}
+    </select>
+
+    <update id="updatePub">
+        update publisher set
+        pu_num = #{pu_num},
+        pu_name = #{pu_name},
+        pu_phone = #{pu_phone},
+        pu_ceo = #{pu_ceo}
+        where pu_num = #{pu_num}
+    </update>
+
     <insert id="pubRegister">
         insert into publisher(pu_name, pu_phone, pu_ceo)
         values(#{pu_name}, #{pu_phone}, #{pu_ceo})

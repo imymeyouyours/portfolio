@@ -654,7 +654,7 @@
 
                         '<a href="' +
                         '<%=request.getContextPath()%>' +
-                        '/admin/user/publisherdetails?pu_num=' +
+                        '/publisherdetails?pu_num=' +
                         publisher.pu_num +
                         '">' +
 

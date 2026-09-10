@@ -72,6 +72,14 @@ public class MemberDao {
         return session.selectList(namespace+"getPublisherList", cri);
     }
 
+    public PublisherDto getPublisher(Integer pu_num) {
+        return session.selectOne(namespace+"getPublisher",pu_num);
+    }
+
+    public int updatePub(PublisherDto publisher) {
+        return session.update(namespace+"updatePub", publisher);
+    }
+
     public int pubRegister(PublisherDto publisher) {
         return session.insert(namespace+"pubRegister", publisher);
     }

@@ -203,6 +203,20 @@ public class MemberService {
         return memberDao.getPublisherList(cri);
     }
 
+    public PublisherDto getPublisher(Integer pu_num) {
+        if(pu_num == null) return null;
+        return memberDao.getPublisher(pu_num);
+    }
+
+    public int updatePub(PublisherDto publisher) {
+
+        if (publisher == null) {
+            return 0;
+        }
+
+        return memberDao.updatePub(publisher);
+    }
+
     public boolean pubRegister(PublisherDto publisher) {
         if (publisher == null) {
             return false;
