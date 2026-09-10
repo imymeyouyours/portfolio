@@ -4,6 +4,7 @@ import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import greenbook.portfolio.pagination.PageMaker;
 import greenbook.portfolio.service.BookService;
+import greenbook.portfolio.service.CartService;
 import greenbook.portfolio.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class AdminController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    CartService cartService;
 
     @GetMapping("/publisherlist")
     public ResponseEntity<Map<String, Object>> publisherList(Criteria cri) {
@@ -591,6 +595,64 @@ public class AdminController {
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(false);
+        }
+    }
+
+    @GetMapping("/orders")
+    public ResponseEntity<Map<String, Object>> ordersList(Criteria cri) {
+
+        try {
+
+            cri.setPerPageNum(5);
+
+            PageMaker pm = new PageMaker();
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount =
+                    cartService.getTotalCountOrders();
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+
+            List<OrderDto> orderList =
+                    cartService.adminOrderList(cri);
+
+
+            List<ParticularsDto> particulars2 =
+                    new ArrayList<>();
+
+
+            for (OrderDto order : orderList) {
+
+                List<ParticularsDto> particulars =
+                        cartService.getParticularsList(
+                                order.getOr_num()
+                        );
+
+                particulars2.addAll(particulars);
+            }
+
+
+            Map<String, Object> result =
+                    new HashMap<>();
+
+            result.put("orderList", orderList);
+            result.put("particulars", particulars2);
+            result.put("pm", pm);
+
+
+            return ResponseEntity.ok(result);
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .build();
         }
     }
 

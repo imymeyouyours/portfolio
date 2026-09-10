@@ -3,10 +3,12 @@ package greenbook.portfolio.service;
 import greenbook.portfolio.dao.CartDao;
 import greenbook.portfolio.domain.CartDto;
 import greenbook.portfolio.domain.MemberDto;
+import greenbook.portfolio.domain.OrderDto;
+import greenbook.portfolio.domain.ParticularsDto;
+import greenbook.portfolio.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -61,4 +63,17 @@ public class CartService {
 
         return cartDao.getPaymentList(isbn, amount);
     }
+
+    public int getTotalCountOrders() {
+        return cartDao.getTotalCountOrders();
+    }
+
+    public List<OrderDto> adminOrderList(Criteria cri) {
+        return cartDao.adminOrderList(cri);
+    }
+
+    public List<ParticularsDto> getParticularsList(String orNum) {
+        return cartDao.getParticularsList(orNum);
+    }
+
 }

@@ -2,6 +2,9 @@ package greenbook.portfolio.dao;
 
 import greenbook.portfolio.domain.CartDto;
 import greenbook.portfolio.domain.MemberDto;
+import greenbook.portfolio.domain.OrderDto;
+import greenbook.portfolio.domain.ParticularsDto;
+import greenbook.portfolio.pagination.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -81,5 +84,17 @@ public class CartDao {
                 namespace + "getPaymentListDirect",
                 map
         );
+    }
+
+    public int getTotalCountOrders() {
+        return session.selectOne(namespace +"getTotalCountOrders");
+    }
+
+    public List<OrderDto> adminOrderList(Criteria cri) {
+        return session.selectList(namespace+"adminOrderList", cri);
+    }
+
+    public List<ParticularsDto> getParticularsList(String orNum) {
+        return session.selectList(namespace+"getParticularsList", orNum);
     }
 }

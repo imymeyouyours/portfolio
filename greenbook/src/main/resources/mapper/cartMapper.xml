@@ -59,4 +59,56 @@
         select re_title as ca_title, #{amount} as ca_amount, bk_mainImg as ca_mainImg, re_price as ca_price , bk_subtitle as ca_subTitle, bk_isbn as ca_isbn
         from registration join book on bk_isbn = re_bk_isbn where re_bk_isbn=#{isbn}
     </select>
+
+    <select id="getTotalCountOrders" resultType="int">
+        select count(*) from `order`
+    </select>
+
+    <select id="adminOrderList" resultType="OrderDto">
+
+        select
+        o.*,
+        r.re_title as or_title,
+        t.or_count as or_re_title,
+        p.pa_methods as or_methods,
+        p.pa_approved as or_approved,
+        t.pr_use_point as or_use_point,
+        p.pa_num as or_pa_num,
+        p.imp_uid as or_imp_uid
+
+        from `order` o
+
+        left join (
+        select
+        pr_or_num,
+        min(pr_bk_isbn) as pr_bk_isbn,
+        max(pr_use_point) as pr_use_point,
+        count(*) as or_count
+        from particulars
+        group by pr_or_num
+        ) t
+        on o.or_num = t.pr_or_num
+
+        join registration r
+        on t.pr_bk_isbn = r.re_bk_isbn
+
+        join payment p
+        on p.pa_or_num = o.or_num
+
+        where
+        o.or_state = '결제완료'
+        or o.or_state = '배송중'
+        or o.or_state = '배송완료'
+        or o.or_state = '구매확정'
+        or o.or_state = '결제취소'
+
+        limit #{pageStart}, #{perPageNum}
+
+    </select>
+
+    <select id="getParticularsList" resultType="ParticularsDto">
+        select * , re_title as pr_title, re_price as pr_price from particulars join registration on pr_bk_isbn = re_bk_isbn
+        where pr_or_num = #{orNum}
+    </select>
+
 </mapper>

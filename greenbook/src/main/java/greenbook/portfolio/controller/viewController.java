@@ -146,4 +146,10 @@ public class viewController {
     public String registration() {
         return "/admin/registration";
     }
+
+    @GetMapping("/orders")
+    public String orders() {
+        return "/admin/orders";
+    }
+
 }

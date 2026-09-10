@@ -415,7 +415,7 @@
             </li>
 
             <li>
-                <a href="<%=request.getContextPath()%>/admin/user/orders">
+                <a href="<%=request.getContextPath()%>/orders">
                     ORDERS
                 </a>
             </li>
