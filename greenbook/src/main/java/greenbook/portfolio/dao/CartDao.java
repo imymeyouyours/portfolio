@@ -1,9 +1,6 @@
 package greenbook.portfolio.dao;
 
-import greenbook.portfolio.domain.CartDto;
-import greenbook.portfolio.domain.MemberDto;
-import greenbook.portfolio.domain.OrderDto;
-import greenbook.portfolio.domain.ParticularsDto;
+import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,5 +93,35 @@ public class CartDao {
 
     public List<ParticularsDto> getParticularsList(String orNum) {
         return session.selectList(namespace+"getParticularsList", orNum);
+    }
+
+    public int updateCart(CartDto cart) {
+        return session.update(namespace+"updateCart", cart);
+    }
+
+    public int insertShipping(ShippingDto shipping) {
+        return session.insert(namespace+"insertShipping", shipping);
+    }
+
+    public int insertPayFinished(OrderDto order) {
+        return session.insert(namespace+"insertPayFinished",order);
+    }
+
+    public int updateOrderState(String orNum) {
+        return session.update(namespace+"updateOrderState", orNum);
+    }
+
+    public int insertPaymentInic(String apply_num, String pay_method, String me_name, String or_num, String formattedDate, String imp_uid) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("apply_num", apply_num);
+        map.put("pay_method", pay_method);
+        map.put("me_name", me_name);
+        map.put("or_num", or_num);
+        map.put("formattedDate", formattedDate);
+        map.put("imp_uid", imp_uid);
+
+        return session.insert(namespace+"insertPaymentInic", map);
     }
 }

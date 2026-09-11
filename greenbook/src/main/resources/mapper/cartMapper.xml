@@ -111,4 +111,31 @@
         where pr_or_num = #{orNum}
     </select>
 
+    <update id="updateCart">
+        update cart set
+        ca_amount = #{ca_amount}
+        where ca_me_id = #{ca_me_id} and ca_re_code = #{ca_re_code}
+    </update>
+
+    <insert id="insertShipping" parameterType="ShippingDto">
+        insert into shipping (sh_name, sh_doro, sh_jibun, sh_phone)
+        values (#{shipping.sh_name}, #{shipping.sh_doro}, #{shipping.sh_jibun}, #{shipping.sh_phone})
+    </insert>
+
+    <insert id="insertPayFinished" >
+        insert into `order` (or_num, or_me_id, or_receiver, or_payment, or_deliver, or_green_point, or_deli_date, or_sh_num, or_pay_card)
+        values (#{or_num}, #{or_me_id}, #{or_receiver}, #{or_payment}, #{or_deliver}, #{or_green_point}, #{or_deli_date}, #{or_sh_num}, #{or_pay_card})
+    </insert>
+
+    <update id="updateOrderState">
+        update `order` set
+        or_state = "결제완료"
+        where or_num = #{orNum}
+    </update>
+
+    <insert id="insertPaymentInic">
+        insert into payment (pa_num, pa_methods, pa_name, pa_or_num, pa_approved, imp_uid)
+        values(#{apply_num}, #{pay_method}, #{me_name}, #{or_num}, #{formattedDate}, #{imp_uid})
+    </insert>
+
 </mapper>

@@ -1,10 +1,7 @@
 package greenbook.portfolio.service;
 
 import greenbook.portfolio.dao.CartDao;
-import greenbook.portfolio.domain.CartDto;
-import greenbook.portfolio.domain.MemberDto;
-import greenbook.portfolio.domain.OrderDto;
-import greenbook.portfolio.domain.ParticularsDto;
+import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -74,6 +71,26 @@ public class CartService {
 
     public List<ParticularsDto> getParticularsList(String orNum) {
         return cartDao.getParticularsList(orNum);
+    }
+
+    public int updateCart(CartDto cart) {
+        return cartDao.updateCart(cart);
+    }
+
+    public int insertShipping(ShippingDto shipping) {
+        return cartDao.insertShipping(shipping);
+    }
+
+    public int insertPayFinished(OrderDto order) {
+        return cartDao.insertPayFinished(order);
+    }
+
+    public int updateOrderState(String orNum) {
+        return cartDao.updateOrderState(orNum);
+    }
+
+    public int insertPaymentInic(String apply_num, String pay_method, String me_name, String or_num, String formattedDate, String imp_uid) {
+        return cartDao.insertPaymentInic(apply_num, pay_method, me_name, or_num, formattedDate, imp_uid);
     }
 
 }

@@ -2711,7 +2711,7 @@
 
                         url:
                             contextPath +
-                            '/order/inicis',
+                            '/api/inicis',
 
                         type:
                             'post',
@@ -2821,7 +2821,7 @@
 
                 url:
                     contextPath +
-                    '/order/cart/update',
+                    '/api/update',
 
                 type:
                     'post',
