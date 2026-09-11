@@ -2499,7 +2499,7 @@
 
                 url:
                     contextPath +
-                    '/order/kakaopay',
+                    '/api/kakaopay',
 
                 type:
                     'post',

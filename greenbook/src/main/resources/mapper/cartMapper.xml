@@ -117,9 +117,12 @@
         where ca_me_id = #{ca_me_id} and ca_re_code = #{ca_re_code}
     </update>
 
-    <insert id="insertShipping" parameterType="ShippingDto">
+    <insert id="insertShipping"
+            parameterType="ShippingDto"
+            useGeneratedKeys="true"
+            keyProperty="sh_num">
         insert into shipping (sh_name, sh_doro, sh_jibun, sh_phone)
-        values (#{shipping.sh_name}, #{shipping.sh_doro}, #{shipping.sh_jibun}, #{shipping.sh_phone})
+        values (#{sh_name}, #{sh_doro}, #{sh_jibun}, #{sh_phone})
     </insert>
 
     <insert id="insertPayFinished" >

@@ -21,3 +21,6 @@ out/
 
 #root-context.xml
 src/main/webapp/WEB-INF/spring/root-context.xml
+
+# Kakao API Key
+src/main/resources/kakao.properties

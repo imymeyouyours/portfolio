@@ -82,6 +82,7 @@ public class CartService {
     }
 
     public int insertPayFinished(OrderDto order) {
+        order.setOr_num(order.setOr_random_num());
         return cartDao.insertPayFinished(order);
     }
 
