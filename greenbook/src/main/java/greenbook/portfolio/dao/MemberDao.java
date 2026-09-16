@@ -18,6 +18,9 @@ public class MemberDao {
     private SqlSession session;
     private static String namespace = "greenbook.portfolio.dao.MemberMapper.";
 
+    public int insertMember(MemberDto user) {
+        return session.insert(namespace + "insertMember", user);
+    }
 
     public MemberDto getLogin(String id) {
         return session.selectOne(namespace + "getMember", id);

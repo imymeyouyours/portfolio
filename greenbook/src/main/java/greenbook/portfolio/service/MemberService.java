@@ -21,6 +21,73 @@ public class MemberService {
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
+    public MemberDto getMember(String id) {
+
+        if (id == null || id.trim().isEmpty()) {
+            return null;
+        }
+
+        return memberDao.getMember(id);
+    }
+
+    public int signup(MemberDto user) {
+
+        if (user == null)
+            return 0;
+
+        // 아이디 검사
+        String idRegex = "^[a-z0-9_-]{5,20}$";
+
+        if (user.getMe_id() == null ||
+                !Pattern.matches(idRegex, user.getMe_id()))
+            return 0;
+
+
+        // 비밀번호 검사
+        String pwRegex = "^[a-zA-Z0-9!@#]{8,16}$";
+
+        if (user.getMe_password() == null ||
+                !Pattern.matches(pwRegex, user.getMe_password()))
+            return 0;
+
+
+        // 이메일 검사
+        String emailRegex = "\\w+@\\w+\\.\\w+(\\.\\w+)?";
+
+        if (user.getMe_email() == null ||
+                !Pattern.matches(emailRegex, user.getMe_email()))
+            return 0;
+
+
+        // 이름 검사
+        if (user.getMe_name() == null ||
+                user.getMe_name().trim().length() == 0)
+            return 0;
+
+
+        // 성별 검사
+        if (user.getMe_gender() == null ||
+                !(user.getMe_gender().equals("F") ||
+                        user.getMe_gender().equals("M")))
+            return 0;
+
+
+        // 아이디 중복 검사
+        if (memberDao.getMember(user.getMe_id()) != null)
+            return 0;
+
+
+        // 비밀번호 암호화
+        String encPw =
+                passwordEncoder.encode(user.getMe_password());
+
+        user.setMe_password(encPw);
+
+
+        // INSERT 결과 반환
+        return memberDao.insertMember(user);
+    }
+
     public MemberDto getLogin(MemberDto member) {
 
         MemberDto dbMember = memberDao.getLogin(member.getMe_id());

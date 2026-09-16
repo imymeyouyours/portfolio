@@ -3,6 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="greenbook.portfolio.dao.MemberMapper">
+
+    <insert id="insertMember">
+        insert into member(me_id, me_nickname, me_password, me_gender, me_birth, me_phone, me_address, me_name, me_resident_num, me_email, me_jAddress)
+        values(#{me_id}, #{me_nickname}, #{me_password}, #{me_gender}, #{me_birth}, #{me_phone}, #{me_address}, #{me_name}, #{me_resident_num}, #{me_email}, #{me_jAddress})
+    </insert>
+
     <select id="getMember" parameterType="String" resultType="MemberDto">
         select *
         from member

@@ -29,6 +29,60 @@ public class MemberController {
     @Autowired
     JavaMailSender mailSender;
 
+    @PostMapping("/id/check")
+    public ResponseEntity<String> idCheck(@RequestParam("id") String id) {
+
+        try {
+
+            if (id == null || !id.matches("^[a-z0-9_-]{5,20}$")) {
+                return ResponseEntity
+                        .badRequest()
+                        .body("INVALID");
+            }
+
+            MemberDto member = memberService.getMember(id);
+
+            if (member == null) {
+                return ResponseEntity.ok("POSSIBLE");
+            }
+
+            return ResponseEntity.ok("DUPLICATE");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR");
+        }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestBody MemberDto user) {
+
+        try {
+
+            int result = memberService.signup(user);
+
+            if (result == 1) {
+                return ResponseEntity.ok("SIGNUP_OK");
+            }
+
+            return ResponseEntity
+                    .badRequest()
+                    .body("SIGNUP_FAIL");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR");
+        }
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody MemberDto member, HttpSession session, HttpServletResponse response) {
 
