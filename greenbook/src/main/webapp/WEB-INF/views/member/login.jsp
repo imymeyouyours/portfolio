@@ -73,32 +73,90 @@
 
 <script>
 
-
     $(document).ready(function () {
-
 
         $('#loginBtn').click(function () {
 
             let id = $('#id').val();
             let pwd = $('#pw').val();
-            let useCookie = $('input[name=useCookie]').is(':checked');
+            let useCookie =
+                $('input[name=useCookie]').is(':checked');
+
+            // 아이디 입력 확인
+            if (id.trim() === '') {
+                alert('아이디를 입력해주세요.');
+                $('#id').focus();
+                return;
+            }
+
+            // 비밀번호 입력 확인
+            if (pwd.trim() === '') {
+                alert('비밀번호를 입력해주세요.');
+                $('#pw').focus();
+                return;
+            }
 
             $.ajax({
-                type: 'POST',       // 요청 메서드
-                url: '/greenbook/api/login',  // 요청 URI
-                headers: {"content-type": "application/json"}, // 요청 헤더
-                data: JSON.stringify({me_id: id, me_password: pwd, useCookie: useCookie}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
-                success: function () {
-                    location.href = '/greenbook/';
+
+                type: 'POST',
+
+                url: '/greenbook/api/login',
+
+                contentType: 'application/json; charset=UTF-8',
+
+                data: JSON.stringify({
+                    me_id: id,
+                    me_password: pwd,
+                    useCookie: useCookie
+                }),
+
+                success: function (res) {
+
+                    if (res === 'LOGIN_OK') {
+                        location.href = '/greenbook/';
+                    }
+
                 },
-                error: function () {
-                    alert("error")
-                } // 에러가 발생했을 때, 호출될 함수
-            }); // $.ajax()
-        })
-    })
+
+                error: function (xhr) {
+
+                    if (xhr.responseText === 'LOGIN_ERR') {
+
+                        alert(
+                            '아이디 또는 비밀번호가 일치하지 않습니다.'
+                        );
+
+                        $('#pw').val('');
+                        $('#pw').focus();
+
+                    } else {
+
+                        alert(
+                            '로그인 중 오류가 발생했습니다.'
+                        );
+
+                    }
+
+                }
+
+            });
+
+        });
+
+
+        // 비밀번호 입력 후 Enter로 로그인
+        $('#pw').keydown(function (e) {
+
+            if (e.key === 'Enter') {
+                $('#loginBtn').click();
+            }
+
+        });
+
+    });
 
 </script>
+
 </body>
 
 </html>
