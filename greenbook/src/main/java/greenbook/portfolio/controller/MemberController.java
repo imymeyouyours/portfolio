@@ -404,6 +404,59 @@ public class MemberController {
         return pw;
     }
 
+
+    @PostMapping("/memberout")
+    public ResponseEntity<String> memberDelete(
+            @RequestBody MemberDto memberDto,
+            HttpSession session) {
+
+        try {
+
+            // 현재 로그인한 회원
+            MemberDto user =
+                    (MemberDto) session.getAttribute("user");
+
+            if (user == null) {
+                return ResponseEntity
+                        .status(HttpStatus.UNAUTHORIZED)
+                        .body("LOGIN_REQUIRED");
+            }
+
+            // 입력한 아이디 / 비밀번호 확인
+            MemberDto loginUser =
+                    memberService.login(memberDto);
+
+            if (loginUser == null) {
+                return ResponseEntity
+                        .badRequest()
+                        .body("PASSWORD_FAIL");
+            }
+
+            // 회원 탈퇴
+            int result =
+                    memberService.memberDelete(user);
+
+            if (result != 1) {
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("DELETE_FAIL");
+            }
+
+            // 세션 삭제
+            session.invalidate();
+
+            return ResponseEntity.ok("DELETE_OK");
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR");
+        }
+    }
+
 }
 
 

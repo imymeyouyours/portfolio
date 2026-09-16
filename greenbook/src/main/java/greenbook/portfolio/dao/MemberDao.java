@@ -130,4 +130,8 @@ public class MemberDao {
     public int booksRegi(BooksDto books) {
         return session.insert(namespace+"booksRegi", books);
     }
+
+    public int memberDelete(MemberDto user) {
+        return session.delete(namespace+"memberDelete", user);
+    }
 }

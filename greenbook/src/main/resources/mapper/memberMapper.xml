@@ -199,4 +199,10 @@
         where me_session_id = #{id} and me_session_limit > now()
     </select>
 
+    <delete id="memberDelete">
+        delete from `member`
+        where (me_id = #{me_id}
+        and me_password = #{me_password})
+    </delete>
+
 </mapper>

@@ -357,4 +357,35 @@ public class MemberService {
         return memberDao.booksRegi(books);
     }
 
+    public MemberDto login(MemberDto member) {
+
+        if (member == null)
+            return null;
+
+        if (member.getMe_id() == null ||
+                member.getMe_password() == null)
+            return null;
+
+        // 아이디로 DB 회원 조회
+        MemberDto dbMember =
+                memberDao.getMember(member.getMe_id());
+
+        if (dbMember == null)
+            return null;
+
+        // 입력한 비밀번호와 DB 암호화 비밀번호 비교
+        if (!passwordEncoder.matches(
+                member.getMe_password(),
+                dbMember.getMe_password())) {
+
+            return null;
+        }
+
+        return dbMember;
+    }
+
+    public int memberDelete(MemberDto user) {
+        return memberDao.memberDelete(user);
+    }
+
 }
