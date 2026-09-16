@@ -23,6 +23,10 @@ public class MemberDao {
         return session.selectOne(namespace + "getMember", id);
     }
 
+    public MemberDto selectUserBySession(String id) {
+        return  session.selectOne(namespace + "selectUserBySession", id);
+    }
+
     public void updateLogin(MemberDto updateUser) {
         session.update(namespace + "updateLogin", updateUser);
     }

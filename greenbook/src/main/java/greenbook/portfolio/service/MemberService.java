@@ -37,6 +37,10 @@ public class MemberService {
         return dbMember;
     }
 
+    public MemberDto getMemberByCookie(String me_session_id) {
+        return memberDao.selectUserBySession(me_session_id);
+    }
+
     public void updateLogin(MemberDto updateUser) {
         memberDao.updateLogin(updateUser);
     }

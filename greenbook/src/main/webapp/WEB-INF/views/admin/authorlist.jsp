@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page language="java"
          contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -355,23 +356,57 @@
 
     <ul>
 
-        <li>
-            <a href="<%=request.getContextPath()%>/logout">
-                LOGOUT
-            </a>
-        </li>
+        <c:if test="${user == null}">
 
-        <li>
-            <a href="<%=request.getContextPath()%>/publisherlist">
-                MANAGEMENT
-            </a>
-        </li>
+            <li>
+                <a href="<%=request.getContextPath()%>/login">
+                    LOGIN
+                </a>
+            </li>
 
-        <li>
-            <a href="<%=request.getContextPath()%>/orders">
-                ORDERS
-            </a>
-        </li>
+            <li>
+                <a href="<%=request.getContextPath()%>/signup">
+                    SIGNUP
+                </a>
+            </li>
+
+        </c:if>
+
+        <c:if test="${user != null}">
+            <li><a href="#" onclick="logout(); return false;">LOGOUT</a></li>
+        </c:if>
+
+        <c:if test="${user.me_grade != 'ADMIN'}">
+
+            <li>
+                <a href="<%=request.getContextPath()%>/mypage">
+                    MYPAGE
+                </a>
+            </li>
+
+            <li>
+                <a href="<%=request.getContextPath()%>/cart">
+                    CART
+                </a>
+            </li>
+
+        </c:if>
+
+        <c:if test="${user.me_grade == 'ADMIN'}">
+
+            <li>
+                <a href="<%=request.getContextPath()%>/publisherlist">
+                    MANAGEMENT
+                </a>
+            </li>
+
+            <li>
+                <a href="<%=request.getContextPath()%>/orders">
+                    ORDERS
+                </a>
+            </li>
+
+        </c:if>
 
         <li>
             <a href="<%=request.getContextPath()%>/">
@@ -589,6 +624,22 @@
         });
 
     });
+
+
+
+    function logout() {
+        $.ajax({
+            url: '/greenbook/api/logout',
+            type: 'GET',
+            success: function () {
+                alert('로그아웃되었습니다.');
+                location.href = '/greenbook';
+            },
+            error: function (xhr, status, error) {
+                console.log('AJAX 실패:', error);
+            }
+        });
+    }
 
 
 

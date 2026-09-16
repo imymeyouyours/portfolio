@@ -397,17 +397,9 @@
 
         </c:if>
 
-
         <c:if test="${user != null}">
-
-            <li>
-                <a href="<%=request.getContextPath()%>/logout">
-                    LOGOUT
-                </a>
-            </li>
-
+            <li><a href="#" onclick="logout(); return false;">LOGOUT</a></li>
         </c:if>
-
 
         <c:if test="${user.me_grade != 'ADMIN'}">
 
@@ -425,7 +417,6 @@
 
         </c:if>
 
-
         <c:if test="${user.me_grade == 'ADMIN'}">
 
             <li>
@@ -442,7 +433,6 @@
 
         </c:if>
 
-
         <li>
             <a href="<%=request.getContextPath()%>/">
                 HOME
@@ -452,6 +442,7 @@
     </ul>
 
 </div>
+
 
 
 <div class="container">
@@ -589,6 +580,20 @@
 
 
 <script>
+
+    function logout() {
+        $.ajax({
+            url: '/greenbook/api/logout',
+            type: 'GET',
+            success: function () {
+                alert('로그아웃되었습니다.');
+                location.href = '/greenbook';
+            },
+            error: function (xhr, status, error) {
+                console.log('AJAX 실패:', error);
+            }
+        });
+    }
 
     $(function () {
 

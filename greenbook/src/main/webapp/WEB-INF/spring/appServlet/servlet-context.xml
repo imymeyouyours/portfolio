@@ -26,6 +26,45 @@
 	<context:component-scan base-package="greenbook.portfolio" />
 	<context:property-placeholder location="classpath:kakao.properties" />
 
+
+	<!-- 자동 로그인 -->
+	<beans:bean id="autologinInterceptor"
+	            class="greenbook.portfolio.interceptor.AutoLoginInterceptor">
+	</beans:bean>
+
+	<!-- 회원 접근 체크 -->
+	<beans:bean id="memberInterceptor"
+	            class="greenbook.portfolio.interceptor.MemberInterceptor">
+	</beans:bean>
+
+	<interceptors>
+
+		<!-- 자동 로그인 -->
+		<interceptor>
+			<mapping path="/**"/>
+			<beans:ref bean="autologinInterceptor"/>
+		</interceptor>
+
+		<!-- 로그인 필요한 페이지 -->
+		<interceptor>
+			<mapping path="/mypage/**"/>
+			<mapping path="/greenpoint/**"/>
+			<mapping path="/memberinfo/**"/>
+			<mapping path="/memberout/**"/>
+			<mapping path="/cart/**"/>
+			<mapping path="/payment/**"/>
+			<mapping path="/publisherlist/**"/>
+			<mapping path="/booklist/**"/>
+			<mapping path="/authorlist/**"/>
+			<mapping path="/bookslist/**"/>
+			<mapping path="/registrationlist/**"/>
+			<mapping path="/orders/**"/>
+
+			<beans:ref bean="memberInterceptor"/>
+		</interceptor>
+
+	</interceptors>
+
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 업로드 최대 크기 10Mb -->
 		<beans:property name="maxUploadSize" value="10485760"></beans:property>

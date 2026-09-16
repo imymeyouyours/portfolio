@@ -188,4 +188,9 @@
         values(#{bs_num}, #{bs_bk_isbn}, #{bs_part}, #{bs_name}, #{bs_au_num})
     </insert>
 
+    <select id="selectUserBySession" resultType = "MemberDto">
+        select * from member
+        where me_session_id = #{id} and me_session_limit > now()
+    </select>
+
 </mapper>
