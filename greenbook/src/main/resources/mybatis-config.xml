@@ -15,5 +15,6 @@
         <typeAlias alias="OrderDto" type="greenbook.portfolio.domain.OrderDto"/>
         <typeAlias alias="ParticularsDto" type="greenbook.portfolio.domain.ParticularsDto"/>
         <typeAlias alias="ShippingDto" type="greenbook.portfolio.domain.ShippingDto"/>
+        <typeAlias alias="PaymentDto" type="greenbook.portfolio.domain.PaymentDto"/>
     </typeAliases>
 </configuration>

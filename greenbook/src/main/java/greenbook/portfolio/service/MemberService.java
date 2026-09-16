@@ -388,4 +388,8 @@ public class MemberService {
         return memberDao.memberDelete(user);
     }
 
+    public int getTotalCountMyPage(String id) {
+        return memberDao.getTotalCountMyPage(id);
+    }
+
 }

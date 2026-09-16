@@ -1,9 +1,9 @@
 package greenbook.portfolio.controller;
 
-import greenbook.portfolio.domain.MemberDto;
-import greenbook.portfolio.domain.PointDto;
+import greenbook.portfolio.domain.*;
 import greenbook.portfolio.pagination.Criteria;
 import greenbook.portfolio.pagination.PageMaker;
+import greenbook.portfolio.service.CartService;
 import greenbook.portfolio.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +25,9 @@ public class MemberController {
 
     @Autowired
     MemberService memberService;
+
+    @Autowired
+    CartService cartService;
 
     @Autowired
     JavaMailSender mailSender;
@@ -210,6 +213,176 @@ public class MemberController {
         }
 
     }
+
+    @GetMapping("/mypage")
+    public ResponseEntity<Map<String, Object>> getMyPage(
+            HttpSession session,
+            Criteria cri) {
+
+        try {
+
+            MemberDto member =
+                    (MemberDto) session.getAttribute("user");
+
+            // 로그인 확인
+            if (member == null) {
+                return new ResponseEntity<>(
+                        HttpStatus.UNAUTHORIZED
+                );
+            }
+
+            // 페이지네이션
+            cri.setPerPageNum(5);
+
+            PageMaker pm = new PageMaker();
+
+            pm.setCriteria(cri);
+            pm.setDisplayPageNum(5);
+
+            int totalCount =
+                    memberService.getTotalCountMyPage(
+                            member.getMe_id()
+                    );
+
+            pm.setTotalCount(totalCount);
+            pm.calcData();
+
+            // 주문 목록
+            List<OrderDto> orderList =
+                    cartService.selectOrderList(
+                            member.getMe_id(),
+                            cri
+                    );
+
+            // JSON으로 반환할 데이터
+            Map<String, Object> result =
+                    new HashMap<>();
+
+            result.put("member", member);
+            result.put("orderList", orderList);
+            result.put("pm", pm);
+
+            return ResponseEntity.ok(result);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    @GetMapping("/mypagedetails")
+    public ResponseEntity<Map<String, Object>> getMyPageDetails(
+            @RequestParam("or_num") String or_num,
+            HttpSession session) {
+
+        try {
+
+            // 로그인 회원 확인
+            MemberDto member =
+                    (MemberDto) session.getAttribute("user");
+
+            if (member == null) {
+                return new ResponseEntity<>(
+                        HttpStatus.UNAUTHORIZED
+                );
+            }
+
+
+            String checkId =
+                    member.getMe_id();
+
+
+            // 주문번호 확인
+            if (or_num == null || or_num.trim().isEmpty()) {
+                return new ResponseEntity<>(
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+
+            // 주문 상세 상품
+            List<ParticularsDto> particulars =
+                    cartService.getParticularsList(
+                            or_num
+                    );
+
+
+            // 주문 정보
+            OrderDto order =
+                    cartService.detailOrderList(
+                            or_num,
+                            checkId
+                    );
+
+
+            // 본인 주문이 아니거나 존재하지 않는 주문
+            if (order == null) {
+                return new ResponseEntity<>(
+                        HttpStatus.NOT_FOUND
+                );
+            }
+
+
+            // 배송 정보
+            ShippingDto shipping =
+                    cartService.detailShippingList(
+                            or_num,
+                            checkId
+                    );
+
+
+            // 결제 정보
+            PaymentDto payment =
+                    cartService.detailPaymentList(
+                            or_num
+                    );
+
+
+            // JSON 결과
+            Map<String, Object> result =
+                    new HashMap<>();
+
+            result.put(
+                    "payment",
+                    payment
+            );
+
+            result.put(
+                    "shipping",
+                    shipping
+            );
+
+            result.put(
+                    "order",
+                    order
+            );
+
+            result.put(
+                    "particulars",
+                    particulars
+            );
+
+
+            return ResponseEntity.ok(
+                    result
+            );
+
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+            return new ResponseEntity<>(
+                    HttpStatus.INTERNAL_SERVER_ERROR
+            );
+        }
+    }
+
+
 
     @GetMapping("/greenpoint")
     public ResponseEntity<Map<String, Object>> getGreenPoint(

@@ -124,4 +124,36 @@ public class CartDao {
 
         return session.insert(namespace+"insertPaymentInic", map);
     }
+
+    public List<OrderDto> selectOrderList(String id, Criteria cri) {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("id",id);
+        map.put("cri",cri);
+
+        return session.selectList(namespace+"selectOrderList",map);
+    }
+
+    public OrderDto detailOrderList(String or_num, String checkId) {
+
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("or_num",or_num);
+        map.put("checkId",checkId);
+
+        return session.selectOne(namespace+"detailOrderList",map);
+    }
+
+    public ShippingDto detailShippingList(String or_num, String checkId) {
+        Map<String, Object> map = new HashMap<>();
+
+        map.put("or_num",or_num);
+        map.put("checkId",checkId);
+
+        return session.selectOne(namespace+"detailShippingList",map);
+    }
+
+    public PaymentDto detailPaymentList(String or_num) {
+        return session.selectOne(namespace+"detailPaymentList",or_num);
+    }
 }

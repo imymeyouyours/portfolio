@@ -94,4 +94,20 @@ public class CartService {
         return cartDao.insertPaymentInic(apply_num, pay_method, me_name, or_num, formattedDate, imp_uid);
     }
 
+    public List<OrderDto> selectOrderList(String id, Criteria cri) {
+        return cartDao.selectOrderList(id, cri);
+    }
+
+    public OrderDto detailOrderList(String or_num, String checkId) {
+        return cartDao.detailOrderList(or_num, checkId);
+    }
+
+    public ShippingDto detailShippingList(String or_num, String checkId) {
+        return cartDao.detailShippingList(or_num, checkId);
+    }
+
+    public PaymentDto detailPaymentList(String or_num) {
+        return cartDao.detailPaymentList(or_num);
+    }
+
 }

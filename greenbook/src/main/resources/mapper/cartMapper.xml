@@ -141,4 +141,60 @@
         values(#{apply_num}, #{pay_method}, #{me_name}, #{or_num}, #{formattedDate}, #{imp_uid})
     </insert>
 
+    <select id="selectOrderList" resultType="OrderDto">
+        SELECT o.*,
+        t.or_count
+        FROM `order` o
+        LEFT JOIN (SELECT pr_or_num,
+        COUNT(*) AS or_count
+        FROM particulars
+        GROUP BY pr_or_num) t ON o.or_num = t.pr_or_num
+        WHERE o.or_me_id = #{id} LIMIT #{cri.pageStart}
+        , #{cri.perPageNum}
+    </select>
+
+    <select id="detailOrderList" resultType="OrderDto">
+
+        SELECT
+        o.*,
+        t.pr_use_point AS or_use_point,
+        p.pa_num AS or_pa_num,
+        p.pa_methods AS or_methods,
+        p.pa_approved AS or_approved,
+        m.me_name AS or_name
+
+        FROM `order` o
+
+        JOIN `member` m
+        ON o.or_me_id = m.me_id
+
+        LEFT JOIN (
+        SELECT
+        pr_or_num,
+        MAX(pr_use_point) AS pr_use_point
+        FROM particulars
+        GROUP BY pr_or_num
+        ) t
+        ON t.pr_or_num = o.or_num
+
+        JOIN payment p
+        ON o.or_num = p.pa_or_num
+
+        WHERE o.or_num = #{or_num}
+        AND m.me_id = #{checkId}
+
+    </select>
+
+    <select id="detailShippingList" resultType="ShippingDto">
+        select * from shipping join `order` on or_sh_num = sh_num
+        join `member` on me_id = or_me_id
+        where me_id = #{checkId} and or_num = #{or_num}
+    </select>
+
+    <select id="detailPaymentList" resultType="PaymentDto" >
+        select * from payment join `order` on or_num = pa_or_num
+        join `member` on me_id = or_me_id
+        where or_num = #{or_num}
+    </select>
+
 </mapper>

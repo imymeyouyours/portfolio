@@ -205,4 +205,8 @@
         and me_password = #{me_password})
     </delete>
 
+    <select id="getTotalCountMyPage" resultType="int">
+        select count(*) from `order` where or_me_id = #{id}
+    </select>
+
 </mapper>

@@ -134,4 +134,8 @@ public class MemberDao {
     public int memberDelete(MemberDto user) {
         return session.delete(namespace+"memberDelete", user);
     }
+
+    public int getTotalCountMyPage(String id) {
+        return session.selectOne(namespace+"getTotalCountMyPage", id);
+    }
 }

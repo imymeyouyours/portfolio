@@ -31,6 +31,11 @@ public class viewController {
         return "/member/mypage";
     }
 
+    @GetMapping("/mypagedetails")
+    public String mypagedetails() {
+        return "/member/mypagedetails";
+    }
+
     @GetMapping("/greenpoint")
     public String greenPoint() {
         return "/member/greenpoint";

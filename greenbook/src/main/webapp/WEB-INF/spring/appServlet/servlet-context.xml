@@ -59,6 +59,7 @@
 			<mapping path="/bookslist/**"/>
 			<mapping path="/registrationlist/**"/>
 			<mapping path="/orders/**"/>
+			<mapping path="/mypagedetails"/>
 
 			<beans:ref bean="memberInterceptor"/>
 		</interceptor>
